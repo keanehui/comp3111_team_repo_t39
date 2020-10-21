@@ -15,7 +15,7 @@
 <p>2. LUK, Yung Kwan</p>
 <ul>
 	<li>Email: littlebappe@gmail.com</li>
-	<li>Github: keanehui</li>
+	<li>Github: Kyl117</li>
 	<li>Branch: Kylian_branch</li>
 	<li>Task: 2, 5</li>
 </ul>
