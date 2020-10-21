@@ -17,7 +17,7 @@
 	<li>Email: littlebappe@gmail.com</li>
 	<li>Github: Kyl117</li>
 	<li>Branch: Kylian_branch</li>
-	<li>Task: 2, 5 </li>
+	<li>Task: 2, 5</li>
 </ul>
 
 <p>3. member3</p>
