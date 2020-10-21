@@ -9,7 +9,7 @@
 	<li>Email: kawonghui@gmail.com</li>
 	<li>Github: keanehui</li>
 	<li>Branch: nk_feature1</li>
-	<li>Task: 1, 2</li>
+	<li>Task: 1, 4</li>
 </ul>
 
 <p>2. LUK, Yung Kwan</p>
@@ -17,6 +17,7 @@
 	<li>Email: littlebappe@gmail.com</li>
 	<li>Github: keanehui</li>
 	<li>Branch: Kylian_branch</li>
+	<li>Task: 2, 5</li>
 </ul>
 
 <p>3. member3</p>
