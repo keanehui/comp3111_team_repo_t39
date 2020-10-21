@@ -12,9 +12,11 @@
 	<li>Task: 1, 2</li>
 </ul>
 
-<p>2. member2</p>
+<p>2. LUK, Yung Kwan</p>
 <ul>
-	<li>Email: email2@abc.com</li>
+	<li>Email: littlebappe@gmail.com</li>
+	<li>Github: keanehui</li>
+	<li>Branch: Kylian_branch</li>
 </ul>
 
 <p>3. member3</p>
