@@ -8,7 +8,7 @@
 <ul>
 	<li>Email: kawonghui@gmail.com</li>
 	<li>Github: keanehui</li>
-	<li>Branch: nk_feature1</li>
+	<li>Branch: keane_branch, nk_feature1(for lab5 only)</li>
 	<li>Task: 1, 4</li>
 </ul>
 
