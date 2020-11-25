@@ -5,6 +5,7 @@ package comp3111.popnames;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -53,9 +54,21 @@ public class Controller {
 
     @FXML
     private Tab tabReport3;
+    
+    @FXML
+    private TextField textfieldTrendStartYear;
+    
+    @FXML
+    private TextField textfieldTrendEndYear;
 
     @FXML
     private ToggleGroup T111;
+    
+    @FXML
+    private RadioButton radioButtonTrendMale;
+    
+    @FXML
+    private RadioButton radioButtonTrendFemale;
 
     @FXML
     private Tab tabApp1;
@@ -152,6 +165,25 @@ public class Controller {
     	for (int i=1; i<=topN; i++)
     		oReport += String.format("#%d: %s\n", i, AnalyzeNames.getName(iYear, i, "M"));
     	textAreaConsole.setText(oReport);
+    }
+    
+    @FXML
+    void doTrend() {
+    	int startYear = Integer.parseInt(textfieldTrendStartYear.getText());
+    	int endYear = Integer.parseInt(textfieldTrendEndYear.getText());
+    	String gender = ((RadioButton) T111.getSelectedToggle()).getText();
+    	gender = gender == "Male" ? "M" : "F";
+
+    	var oReport = AnalyzeNames.getTrend(startYear, endYear, gender);
+    	
+    	String[] header = {"Name", "Lowest Rank", "Highest Rank", "Trend"};
+    	String output = "";
+    	String format = "|%1$-20s|%2$-20s|%3$-20s|%4$-20s|\n";
+    	output += String.format(format, (Object[]) header);
+    	for (int i = 0; i < 2; i++) {
+    		output += String.format(format, (Object[]) oReport[i]);
+    	}
+    	textAreaConsole.setText(output);
     }
     
 

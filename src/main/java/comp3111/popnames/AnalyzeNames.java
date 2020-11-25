@@ -93,5 +93,59 @@ public class AnalyzeNames {
 	     else
 	     	return "information on the name at the specified rank is not available";
 	 }
+	 
+	 public static String[][] getTrend(int startYear, int endYear, String gender) {
+		 if (startYear == 0 || endYear == 0) {
+			 return null;
+		 }
+	 	 String[][] result = new String [4][4];
+	 	 int rise = 0;
+	 	 int fall = 0;
+	     int currentRank = 0;
+	     int otherRank = 0;
+	     boolean init = false;
+	     
+	     // For every name entry in the CSV file
+	     for (CSVRecord rec : getFileParser(startYear)) {
+	         // Get its rank if gender matches param
+	         if (rec.get(1).equals(gender)) {
+	        	 String currentName = rec.get(0);
+	             // Get the name whose rank matches param
+	         	currentRank++;
+	         	if (!init) {
+		    		 if ((otherRank = getRank(endYear, currentName, gender)) != -1) {
+		    			 rise = currentRank - otherRank;	// suppose it's positive
+		    			 fall = currentRank - otherRank;	// suppose it's negative
+		    			 result[0][0] = currentName;
+		    			 result[0][1] = Integer.toString(currentRank);
+		    			 result[0][2] = Integer.toString(otherRank);
+		    			 result[0][3] = Integer.toString(Math.abs(rise));
+		    			 result[1][0] = currentName;
+		    			 result[1][1] = Integer.toString(currentRank);
+		    			 result[2][2] = Integer.toString(otherRank);
+		    			 result[3][3] = Integer.toString(Math.abs(fall));
+		    			 init = !init;
+		    		 }
+		    	} else if ((otherRank = getRank(endYear, currentName, gender)) != -1) {
+		    		if (currentRank - otherRank > rise) {	// there's a name have higher rise
+		    			rise = currentRank - otherRank;
+		    			result[0][0] = currentName;
+		    			result[0][1] = Integer.toString(currentRank);
+		    			result[0][2] = Integer.toString(otherRank);
+		    			result[0][3] = Integer.toString(Math.abs(rise));
+		    		}
+		    		if (currentRank - otherRank < fall) {	// there's a name have higher fall
+		    			fall = currentRank - otherRank;
+		    			result[1][0] = currentName;
+		    			result[1][1] = Integer.toString(currentRank);
+		    			result[1][2] = Integer.toString(otherRank);
+		    			result[1][3] = Integer.toString(Math.abs(fall));
+		    		}
+		    	}
+	         }
+	     } 
+//	     System.out.println(result[0]);
+	     return result;	// did not handle not found result (little possibility)
+	 }
  
 }
