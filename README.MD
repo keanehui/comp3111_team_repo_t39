@@ -20,7 +20,10 @@
 	<li>Task: 2, 5</li>
 </ul>
 
-<p>3. member3</p>
+<p>3. CHEN, Ka Wai</p>
 <ul>
-	<li>Email: email3@abc.com</li>
+	<li>Email: kwchenaa@connect.ust.hk</li>
+	<li>Github: garychen0</li>
+	<li>Branch: gary_branch</li>
+	<li>Task: 3, 6</li>
 </ul>
