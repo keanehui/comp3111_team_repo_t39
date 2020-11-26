@@ -122,12 +122,11 @@
 		                            
                                     <Label layoutX="112.0" layoutY="104.0" text="Gender of Interest: " />
                                     <Label layoutX="112.0" layoutY="138.0" text="Period (1880 - 2019): " />
-                                    <TextField fx:id="textfieldTrendEndYear" layoutX="292.0" layoutY="132.0" prefHeight="26.0" prefWidth="43.0" text="1945" />
                                     <TextField fx:id="textfieldTrendStartYear" layoutX="226.0" layoutY="132.0" prefHeight="26.0" prefWidth="43.0" text="1941" />
+                                    <TextField fx:id="textfieldTrendEndYear" layoutX="292.0" layoutY="132.0" prefHeight="26.0" prefWidth="43.0" text="1945" />
                                     <Label layoutX="274.0" layoutY="136.0" text="to" />
-
                                     <Label layoutX="350.0" layoutY="138.0" text="Top N (N&gt;=1): " />
-                                    <TextField fx:id="textfieldTrendTopN" layoutX="450.0" layoutY="132.0" prefHeight="26.0" prefWidth="27.0" text="10" />
+                                    <TextField fx:id="textfieldTrendTopN" layoutX="430.0" layoutY="132.0" prefHeight="26.0" prefWidth="27.0" text="10" />
 
                                     <Button layoutX="112.0" layoutY="175.0" mnemonicParsing="false" onAction="#doTrend" text="REPORT (yet to be implemented)" />
                                  </children>
