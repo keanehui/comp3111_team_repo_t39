@@ -69,6 +69,9 @@ public class Controller {
     
     @FXML
     private RadioButton radioButtonTrendFemale;
+    
+    @FXML
+    private TextField textfieldTrendTopN;
 
     @FXML
     private Tab tabApp1;
@@ -169,19 +172,22 @@ public class Controller {
     
     @FXML
     void doTrend() {
-    	int startYear = Integer.parseInt(textfieldTrendStartYear.getText());
-    	int endYear = Integer.parseInt(textfieldTrendEndYear.getText());
-    	String gender = ((RadioButton) T111.getSelectedToggle()).getText();
-    	gender = gender == "Male" ? "M" : "F";
-
-    	var oReport = AnalyzeNames.getTrend(startYear, endYear, gender);
+    	int istartYear = Integer.parseInt(textfieldTrendStartYear.getText());
+    	int iendYear = Integer.parseInt(textfieldTrendEndYear.getText());
+    	String igender = ((RadioButton) T111.getSelectedToggle()).getText();
+    	String interestGender = (igender.equals("Male") ? "M" : "F");
+    	int topN = Integer.parseInt(textfieldTrendTopN.getText());
     	
-    	String[] header = {"Name", "Lowest Rank", "Highest Rank", "Trend"};
+
+    	var oReport = AnalyzeNames.getTrend(istartYear, iendYear, interestGender, topN);
+    	
+    	String[] header = {"Name", "Lowest Rank", "Highest Rank", "Gross Trend"};
     	String output = "";
     	String format = "|%1$-20s|%2$-20s|%3$-20s|%4$-20s|\n";
     	output += String.format(format, (Object[]) header);
-    	for (int i = 0; i < 2; i++) {
-    		output += String.format(format, (Object[]) oReport[i]);
+    	for (String key : oReport.keySet()) {
+    		output += oReport.get(key).name;
+    		output += "\n";
     	}
     	textAreaConsole.setText(output);
     }

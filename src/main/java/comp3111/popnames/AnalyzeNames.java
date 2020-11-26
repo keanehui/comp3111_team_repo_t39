@@ -1,5 +1,8 @@
 package comp3111.popnames;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
 import org.apache.commons.csv.*;
 import edu.duke.*;
 
@@ -94,58 +97,61 @@ public class AnalyzeNames {
 	     	return "information on the name at the specified rank is not available";
 	 }
 	 
-	 public static String[][] getTrend(int startYear, int endYear, String gender) {
+	 public static LinkedHashMap<String, RankProperties> getTrend(int startYear, int endYear, String gender, int topN) {
 		 if (startYear == 0 || endYear == 0) {
 			 return null;
 		 }
-	 	 String[][] result = new String [4][4];
-	 	 int rise = 0;
-	 	 int fall = 0;
-	     int currentRank = 0;
-	     int otherRank = 0;
-	     boolean init = false;
-	     
-	     // For every name entry in the CSV file
-	     for (CSVRecord rec : getFileParser(startYear)) {
-	         // Get its rank if gender matches param
-	         if (rec.get(1).equals(gender)) {
-	        	 String currentName = rec.get(0);
-	             // Get the name whose rank matches param
-	         	currentRank++;
-	         	if (!init) {
-		    		 if ((otherRank = getRank(endYear, currentName, gender)) != -1) {
-		    			 rise = currentRank - otherRank;	// suppose it's positive
-		    			 fall = currentRank - otherRank;	// suppose it's negative
-		    			 result[0][0] = currentName;
-		    			 result[0][1] = Integer.toString(currentRank);
-		    			 result[0][2] = Integer.toString(otherRank);
-		    			 result[0][3] = Integer.toString(Math.abs(rise));
-		    			 result[1][0] = currentName;
-		    			 result[1][1] = Integer.toString(currentRank);
-		    			 result[2][2] = Integer.toString(otherRank);
-		    			 result[3][3] = Integer.toString(Math.abs(fall));
-		    			 init = !init;
-		    		 }
-		    	} else if ((otherRank = getRank(endYear, currentName, gender)) != -1) {
-		    		if (currentRank - otherRank > rise) {	// there's a name have higher rise
-		    			rise = currentRank - otherRank;
-		    			result[0][0] = currentName;
-		    			result[0][1] = Integer.toString(currentRank);
-		    			result[0][2] = Integer.toString(otherRank);
-		    			result[0][3] = Integer.toString(Math.abs(rise));
-		    		}
-		    		if (currentRank - otherRank < fall) {	// there's a name have higher fall
-		    			fall = currentRank - otherRank;
-		    			result[1][0] = currentName;
-		    			result[1][1] = Integer.toString(currentRank);
-		    			result[1][2] = Integer.toString(otherRank);
-		    			result[1][3] = Integer.toString(Math.abs(fall));
-		    		}
-		    	}
-	         }
-	     } 
-//	     System.out.println(result[0]);
-	     return result;	// did not handle not found result (little possibility)
+
+		 var result = new LinkedHashMap<String, RankProperties>();
+//	 	 System.out.print("tesT");
+	 	 for (int i = startYear, j = 1; j <= topN; j++) {
+ 			var currentProp = new RankProperties(); 
+ 			var currentName = getName(i, j, gender);
+ 			currentProp.name = currentName;
+ 			currentProp.highestRank = j;
+ 			currentProp.highestRankYear = i;
+ 			currentProp.lowestRank = j;
+ 			currentProp.lowestRankYear = i;
+ 			currentProp.grossTrend = "FLAT";
+ 			result.put(currentName, currentProp);
+// 			System.out.print("tesT");
+ 		 }
+//	 	for (String key : result.keySet()) {
+//	 		System.out.println(result.get(key).name);
+//    	}
+	 	 for (int i = startYear + 1; i <= endYear; i++) {
+	 		 var deletingName = new ArrayList<String>();
+	 		 for (String key : result.keySet()) {
+	 			 int currentRank;
+	 			 if (topN >= (currentRank = getRank(i, key, gender))) {		// maintained, then update
+	 				 if (result.get(key).highestRank < currentRank) {		// what if the same
+	 					if (result.get(key).lowestRank > currentRank) {
+	 					} else {
+	 						result.get(key).lowestRank = currentRank;
+	 						result.get(key).lowestRankYear = i;
+	 					}
+	 				 } else {
+	 					result.get(key).highestRank = currentRank;
+						result.get(key).highestRankYear = i;
+	 				 }
+	 				 if (result.get(key).highestRank > result.get(key).lowestRank) {
+	 					result.get(key).grossTrend = "DOWN";
+	 				 } else if (result.get(key).highestRank < result.get(key).lowestRank) {
+	 					result.get(key).grossTrend = "UP";
+	 				 } else {
+	 					result.get(key).grossTrend = "FLAT";
+	 				 }
+	 			 } else {									// remove from map
+	 				System.out.println(currentRank);
+	 				deletingName.add(key);
+	 			 }
+	 		 }
+	 		 for (var key : deletingName) {
+	 			System.out.println(result.get(key).name);
+	 			 result.remove(key);
+	 		 }
+	 	 }
+	 	 return result;
 	 }
  
 }
