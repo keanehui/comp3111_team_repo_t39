@@ -81,6 +81,25 @@ public class Controller {
 
     @FXML
     private Tab tabApp3;
+    
+    @FXML
+    private TextField textfieldCompatibleUserName;
+    
+    @FXML
+    private ToggleGroup ToggleGroupCompatibleUserGender;
+    
+    @FXML
+    private TextField textfieldCompatibleUserYOB;
+    
+    @FXML
+    private TextField textfieldCompatibleMatchName;
+    
+    @FXML
+    private ToggleGroup ToggleGroupCompatibleMatchGender;
+    
+    @FXML
+    private ToggleGroup ToggleGroupCompatiblePreference;
+    
 
     @FXML
     private TextArea textAreaConsole;
@@ -193,6 +212,21 @@ public class Controller {
     	textAreaConsole.setText(output);
     }
     
+    @FXML
+    void doShowCompatibilityScore() {
+    	String iName =  textfieldCompatibleUserName.getText();
+    	String igender = ((RadioButton) ToggleGroupCompatibleUserGender.getSelectedToggle()).getText().contentEquals("Male") ? "M" : "F";
+    	int iYOB = Integer.parseInt(textfieldCompatibleUserYOB.getText());
+    	
+    	String iNameMate = textfieldCompatibleMatchName.getText();
+    	String iGenderMate = ((RadioButton) ToggleGroupCompatibleMatchGender.getSelectedToggle()).getText().contentEquals("Male") ? "M" : "F";
+    	String iPreference = ((RadioButton) ToggleGroupCompatiblePreference.getSelectedToggle()).getText();
+    	
+    	var oApp = AnalyzeNames.calculateCompatiblityScore(iName, igender, iYOB, iNameMate, iGenderMate, iPreference);
+    	String output = "";
+    	output += "Compatiblity Score = " + Float.toString(oApp) + "%";
+    	textAreaConsole.setText(output);
+    }
 
 }
 
