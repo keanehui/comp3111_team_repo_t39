@@ -178,7 +178,6 @@ public class Controller {
     	String interestGender = (igender.equals("Male") ? "M" : "F");
     	int topN = Integer.parseInt(textfieldTrendTopN.getText());
     	
-
     	var oReport = AnalyzeNames.getTrend(istartYear, iendYear, interestGender, topN);
     	
     	String[] header = {"Name", "Lowest Rank", "Highest Rank", "Gross Trend"};
@@ -186,7 +185,9 @@ public class Controller {
     	String format = "|%1$-20s|%2$-20s|%3$-20s|%4$-20s|\n";
     	output += String.format(format, (Object[]) header);
     	for (String key : oReport.keySet()) {
-    		output += oReport.get(key).name;
+    		var currentValue = oReport.get(key);
+    		output += currentValue.name + " " + currentValue.lowestRank + " " + currentValue.lowestRankYear + " "
+    					+ currentValue.highestRank + " " + currentValue.highestRankYear + " " + currentValue.grossTrend;
     		output += "\n";
     	}
     	textAreaConsole.setText(output);

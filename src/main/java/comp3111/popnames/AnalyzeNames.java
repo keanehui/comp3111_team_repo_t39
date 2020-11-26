@@ -103,7 +103,6 @@ public class AnalyzeNames {
 		 }
 
 		 var result = new LinkedHashMap<String, RankProperties>();
-//	 	 System.out.print("tesT");
 	 	 for (int i = startYear, j = 1; j <= topN; j++) {
  			var currentProp = new RankProperties(); 
  			var currentName = getName(i, j, gender);
@@ -114,42 +113,34 @@ public class AnalyzeNames {
  			currentProp.lowestRankYear = i;
  			currentProp.grossTrend = "FLAT";
  			result.put(currentName, currentProp);
-// 			System.out.print("tesT");
  		 }
-//	 	for (String key : result.keySet()) {
-//	 		System.out.println(result.get(key).name);
-//    	}
+
 	 	 for (int i = startYear + 1; i <= endYear; i++) {
 	 		 var deletingName = new ArrayList<String>();
 	 		 for (String key : result.keySet()) {
 	 			 int currentRank;
 	 			 if (topN >= (currentRank = getRank(i, key, gender))) {		// maintained, then update
-	 				 if (result.get(key).highestRank < currentRank) {		// what if the same
-	 					if (result.get(key).lowestRank > currentRank) {
-	 					} else {
+	 				 if (currentRank == result.get(key).highestRank && currentRank == result.get(key).lowestRank)
+	 					 continue;
+	 				 if (result.get(key).highestRank < currentRank) {		
+	 					if (result.get(key).lowestRank < currentRank){
 	 						result.get(key).lowestRank = currentRank;
 	 						result.get(key).lowestRankYear = i;
 	 					}
-	 				 } else {
+	 				 } else if (result.get(key).highestRank > currentRank) {
 	 					result.get(key).highestRank = currentRank;
 						result.get(key).highestRankYear = i;
 	 				 }
-	 				 if (result.get(key).highestRank > result.get(key).lowestRank) {
-	 					result.get(key).grossTrend = "DOWN";
-	 				 } else if (result.get(key).highestRank < result.get(key).lowestRank) {
+	 				 if (result.get(key).lowestRankYear < result.get(key).highestRankYear) 
 	 					result.get(key).grossTrend = "UP";
-	 				 } else {
-	 					result.get(key).grossTrend = "FLAT";
-	 				 }
+	 				 else 
+	 					result.get(key).grossTrend = "DOWN";
 	 			 } else {									// remove from map
-	 				System.out.println(currentRank);
 	 				deletingName.add(key);
 	 			 }
 	 		 }
-	 		 for (var key : deletingName) {
-	 			System.out.println(result.get(key).name);
+	 		 for (var key : deletingName)
 	 			 result.remove(key);
-	 		 }
 	 	 }
 	 	 return result;
 	 }
