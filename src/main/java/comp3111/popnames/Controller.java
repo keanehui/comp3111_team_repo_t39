@@ -56,22 +56,16 @@ public class Controller {
     private Tab tabReport3;
     
     @FXML
-    private TextField textfieldTrendStartYear;
+    private IntegerTextField textfieldTrendStartYear;
     
     @FXML
-    private TextField textfieldTrendEndYear;
+    private IntegerTextField textfieldTrendEndYear;
 
     @FXML
-    private ToggleGroup T111;
+    private ToggleGroup ToggleGroupTrendGender;
     
     @FXML
-    private RadioButton radioButtonTrendMale;
-    
-    @FXML
-    private RadioButton radioButtonTrendFemale;
-    
-    @FXML
-    private TextField textfieldTrendTopN;
+    private IntegerTextField textfieldTrendTopN;
 
     @FXML
     private Tab tabApp1;
@@ -89,7 +83,7 @@ public class Controller {
     private ToggleGroup ToggleGroupCompatibleUserGender;
     
     @FXML
-    private TextField textfieldCompatibleUserYOB;
+    private IntegerTextField textfieldCompatibleUserYOB;
     
     @FXML
     private TextField textfieldCompatibleMatchName;
@@ -191,14 +185,49 @@ public class Controller {
     
     @FXML
     void doTrend() {
+    	// Validation
+    	if (textfieldTrendStartYear.getText().trim().isEmpty()) {
+    		textAreaConsole.setText("The start year of the period cannot be blank.");	
+    		return;
+    	}
+    	if (textfieldTrendEndYear.getText().trim().isEmpty()) {
+    		textAreaConsole.setText("The end year of the period cannot be blank.");	
+    		return;
+    	}
+    	if (textfieldTrendTopN.getText().trim().isEmpty()) {
+    		textAreaConsole.setText("The TopN parameter cannot be blank.");	
+    		return;
+    	}
+    	if (textfieldTrendStartYear.getText().trim().charAt(0) == '0') {
+    		textAreaConsole.setText("The start year should not start with zero(s).");	
+    		return;
+    	}
+    	if (textfieldTrendEndYear.getText().trim().charAt(0) == '0') {
+    		textAreaConsole.setText("The end year should not start with zero(s).");	
+    		return;
+    	}
+    	if (textfieldTrendTopN.getText().trim().charAt(0) == '0') {
+    		textAreaConsole.setText("The TopN parameter should not start with zero(s).");	
+    		return;
+    	}
     	int istartYear = Integer.parseInt(textfieldTrendStartYear.getText());
     	int iendYear = Integer.parseInt(textfieldTrendEndYear.getText());
-    	String igender = ((RadioButton) T111.getSelectedToggle()).getText();
-    	String interestGender = (igender.equals("Male") ? "M" : "F");
+    	String igender = ((RadioButton) ToggleGroupTrendGender.getSelectedToggle()).getText().contentEquals("Male") ? "M" : "F";
     	int topN = Integer.parseInt(textfieldTrendTopN.getText());
     	
-    	var oReport = AnalyzeNames.getTrend(istartYear, iendYear, interestGender, topN);
+    	if (istartYear < 1880 || istartYear > 2019 || iendYear < 1880 || iendYear > 2019) {
+    		textAreaConsole.setText("The period should be in between 1880 to 2019 inclusively.");	
+    		return;
+    	}
+    	if (topN <= 0) {
+    		textAreaConsole.setText("The TopN parameter should larger than 0.");	
+    		return;
+    	}
     	
+    	// Call the calculation method
+    	var oReport = AnalyzeNames.getTrend(istartYear, iendYear, igender, topN);
+    	
+    	// Print out the output
     	String[] header = {"Name", "Lowest Rank", "Highest Rank", "Gross Trend"};
     	String output = "";
     	String format = "|%1$-20s|%2$-20s|%3$-20s|%4$-20s|\n";
@@ -214,6 +243,15 @@ public class Controller {
     
     @FXML
     void doShowCompatibilityScore() {
+    	// Validation
+    	if (textfieldCompatibleUserYOB.getText().trim().isEmpty()) {
+    		textAreaConsole.setText("The year of birth cannot be blank.");	
+    		return;
+    	}
+    	if (textfieldCompatibleUserYOB.getText().trim().charAt(0) == '0') {
+    		textAreaConsole.setText("The year of birth should not start with zero(s).");	
+    		return;
+    	}
     	String iName =  textfieldCompatibleUserName.getText();
     	String igender = ((RadioButton) ToggleGroupCompatibleUserGender.getSelectedToggle()).getText().contentEquals("Male") ? "M" : "F";
     	int iYOB = Integer.parseInt(textfieldCompatibleUserYOB.getText());
@@ -222,7 +260,10 @@ public class Controller {
     	String iGenderMate = ((RadioButton) ToggleGroupCompatibleMatchGender.getSelectedToggle()).getText().contentEquals("Male") ? "M" : "F";
     	String iPreference = ((RadioButton) ToggleGroupCompatiblePreference.getSelectedToggle()).getText();
     	
+    	// Call the calculation method
     	var oApp = AnalyzeNames.calculateCompatiblityScore(iName, igender, iYOB, iNameMate, iGenderMate, iPreference);
+    	
+    	// Print out the output
     	String output = "";
     	output += "Compatiblity Score = " + Float.toString(oApp) + "%";
     	textAreaConsole.setText(output);
