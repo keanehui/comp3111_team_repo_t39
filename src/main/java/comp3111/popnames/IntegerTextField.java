@@ -2,8 +2,14 @@ package comp3111.popnames;
 
 import javafx.scene.control.TextField;
 
+/**
+ * Helper class for validating TextField
+ */
 public class IntegerTextField extends TextField {
 
+	/**
+     * Default constructor
+     */
     public IntegerTextField() {
         super();
     }
@@ -23,6 +29,12 @@ public class IntegerTextField extends TextField {
         		super.replaceSelection(replacement);
     }
 
+    /**
+     * Validates that the TextField to be either an Integer or blank.
+     *
+     * @param TextField to check.
+     * @return True if the the TextField is either an Integer or blank.
+     */
     private boolean validate(String text) {
         if (text.isEmpty())
             return true;

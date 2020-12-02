@@ -97,16 +97,24 @@ public class AnalyzeNames {
 	     	return "information on the name at the specified rank is not available";
 	 }
 	 
-	 
-	 public static LinkedHashMap<String, RankProperties> getTrend(int startYear, int endYear, String gender, int topN) {
-		 if (startYear == 0 || endYear == 0) {
+	 /**
+     * Identify the names that have maintained a high level of popularity within Top N over a given period.
+     *
+     * @param int istartYear the start year of the period
+     * @param int iendYear the end year of the period
+     * @param RankProperties the gender of interest
+     * @param int topN the level of popularity
+     * @return A LinkedHashMap<String, RankProperties> that stores name as the key and RankProperties as value
+     */
+	 public static LinkedHashMap<String, RankProperties> getTrend(int istartYear, int iendYear, String igender, int topN) {
+		 if (istartYear == 0 || iendYear == 0) {
 			 return null;
 		 }
 
 		 var result = new LinkedHashMap<String, RankProperties>();
-	 	 for (int i = startYear, j = 1; j <= topN; j++) {
+	 	 for (int i = istartYear, j = 1; j <= topN; j++) {
  			var currentProp = new RankProperties(); 
- 			var currentName = getName(i, j, gender);
+ 			var currentName = getName(i, j, igender);
  			currentProp.name = currentName;
  			currentProp.highestRank = j;
  			currentProp.highestRankYear = i;
@@ -116,11 +124,11 @@ public class AnalyzeNames {
  			result.put(currentName, currentProp);
  		 }
 
-	 	 for (int i = startYear + 1; i <= endYear; i++) {
+	 	 for (int i = istartYear + 1; i <= iendYear; i++) {
 	 		 var deletingName = new ArrayList<String>();
 	 		 for (String key : result.keySet()) {
 	 			 int currentRank;
-	 			 if (topN >= (currentRank = getRank(i, key, gender))) {		// maintained, then update
+	 			 if (topN >= (currentRank = getRank(i, key, igender))) {		// maintained, then update
 	 				 if (currentRank == result.get(key).highestRank && currentRank == result.get(key).lowestRank)
 	 					 continue;
 	 				 if (result.get(key).highestRank < currentRank) {		
@@ -146,6 +154,17 @@ public class AnalyzeNames {
 	 	 return result;
 	 }
 	 
+	 /**
+     * Calculate Scores for Compatible Pairs
+     *
+     * @param String iName Name of the user
+     * @param String iGender Gender of the user
+     * @param int iYOB Year of Birth of the user
+     * @param String iNameMate Name of the person to be matched
+     * @param String iGenderMate Gender of the person to be matched
+     * @param String iPreference user's preference on either have a younger or older soulmate
+     * @return A float number that storing the calculated compatibility score
+     */
 	 public static float calculateCompatiblityScore(String iName, String iGender, int iYOB, String iNameMate, String iGenderMate, String iPreference) {
 		 int oRank, oRankMate;
 		 
