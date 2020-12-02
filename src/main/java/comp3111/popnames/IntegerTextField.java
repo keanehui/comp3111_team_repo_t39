@@ -17,7 +17,9 @@ public class IntegerTextField extends TextField {
     @Override
     public void replaceSelection(String replacement) {
         if (validate(replacement))
-        	if (Integer.parseInt(replacement) > 0)
+        	if (replacement.isEmpty())
+        		super.replaceSelection(replacement);
+        	else if (Integer.parseInt(replacement) > 0)
         		super.replaceSelection(replacement);
     }
 

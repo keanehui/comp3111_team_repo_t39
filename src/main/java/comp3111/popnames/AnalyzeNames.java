@@ -97,6 +97,7 @@ public class AnalyzeNames {
 	     	return "information on the name at the specified rank is not available";
 	 }
 	 
+	 
 	 public static LinkedHashMap<String, RankProperties> getTrend(int startYear, int endYear, String gender, int topN) {
 		 if (startYear == 0 || endYear == 0) {
 			 return null;
@@ -146,27 +147,33 @@ public class AnalyzeNames {
 	 }
 	 
 	 public static float calculateCompatiblityScore(String iName, String iGender, int iYOB, String iNameMate, String iGenderMate, String iPreference) {
-//		 System.out.println(iName);
-//		 System.out.println(iGender);
-//		 System.out.println(iYOB);
-//		 System.out.println(iNameMate);
-//		 System.out.println(iGenderMate);
-//		 System.out.println(iPreference);
+		 int oRank, oRankMate;
 		 
-		 int oRank = getRank(iYOB, iName, iGender);
+		 try {
+		 oRank = getRank(iYOB, iName, iGender);
+		 } catch (Exception e) {
+			 oRank = 1;
+		 }
 		 if (oRank == -1)
 			 oRank = 1;
-		 System.out.println(oRank);
+
 		 int oYOB;
 		 if (iPreference == "Younger")
 			 oYOB = iYOB + 1;
 		 else 
 			 oYOB = iYOB - 1;
-		 int oRankMate = getRank(oYOB, iNameMate, iGenderMate);
+		 
+		 try {
+			 oRankMate = getRank(oYOB, iNameMate, iGenderMate);
+		 } catch (Exception e) {
+			 oRankMate = 1;
+		 }
 		 if (oRankMate == -1)
 			 oRankMate = 1;
-		 System.out.println(oRankMate);
-		 System.out.println(Math.abs(oRank - oRankMate));
+
+//		 System.out.println(Math.abs(oRank));
+//		 System.out.println(Math.abs(oRankMate));
+//		 System.out.println(Math.abs(oRank - oRankMate));
 		 if (oRank > oRankMate)
 			 return ((1 - Math.abs(oRank - oRankMate) / (float)oRank) * 100);
 		 return ((1 - Math.abs(oRank - oRankMate) / (float)oRankMate) * 100);

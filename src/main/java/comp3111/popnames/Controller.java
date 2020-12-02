@@ -183,6 +183,11 @@ public class Controller {
     	textAreaConsole.setText(oReport);
     }
     
+    /**
+     *  Task 3
+     *  To be triggered by the "Report" button on the Report3 Tab
+     *  
+     */
     @FXML
     void doTrend() {
     	// Validation
@@ -241,6 +246,11 @@ public class Controller {
     	textAreaConsole.setText(output);
     }
     
+    /**
+     *  Task 6
+     *  To be triggered by the "Show Compatibility Score" button on the Application 3 Tab
+     *  
+     */
     @FXML
     void doShowCompatibilityScore() {
     	// Validation
