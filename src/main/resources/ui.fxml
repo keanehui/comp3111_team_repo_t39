@@ -11,7 +11,6 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import comp3111.popnames.IntegerTextField?>
 
 <VBox prefHeight="679.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="comp3111.popnames.Controller">
   <children>
@@ -101,7 +100,7 @@
                            <children>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="318.0" prefWidth="719.0">
                                  <children>
-                                    <TextArea layoutX="112.0" layoutY="26.0" prefHeight="61.0" prefWidth="355.0" text="Generate a brief report in response to the queries on identifying the names that have shown the largest rise/fall in popularity over a given period.&#10;" wrapText="true" />
+                                    <TextArea layoutX="112.0" layoutY="26.0" prefHeight="61.0" prefWidth="355.0" text="Generate a brief report in response to the queries on identifying the names that have maintained a high level of popularity within Top N over a given period.&#10;" wrapText="true" />
                                     <RadioButton fx:id="radioButtonTrendMale" layoutX="225.0" layoutY="104.0" mnemonicParsing="false" selected="true" text="Male">
                                        <toggleGroup>
                                           <ToggleGroup fx:id="ToggleGroupTrendGender" />
@@ -111,13 +110,13 @@
 		                            
                                     <Label layoutX="112.0" layoutY="104.0" text="Gender of Interest: " />
                                     <Label layoutX="112.0" layoutY="138.0" text="Period (1880 - 2019): " />
-                                    <IntegerTextField fx:id="textfieldTrendStartYear" layoutX="226.0" layoutY="132.0" prefHeight="26.0" prefWidth="43.0" text="1941" />
-                                    <IntegerTextField fx:id="textfieldTrendEndYear" layoutX="292.0" layoutY="132.0" prefHeight="26.0" prefWidth="43.0" text="1945" />
+                                    <TextField fx:id="textfieldTrendStartYear" layoutX="226.0" layoutY="132.0" prefHeight="26.0" prefWidth="43.0" text="1941" />
+                                    <TextField fx:id="textfieldTrendEndYear" layoutX="292.0" layoutY="132.0" prefHeight="26.0" prefWidth="43.0" text="1945" />
                                     <Label layoutX="274.0" layoutY="136.0" text="to" />
                                     <Label layoutX="350.0" layoutY="138.0" text="Top N (N&gt;=1): " />
-                                    <IntegerTextField fx:id="textfieldTrendTopN" layoutX="430.0" layoutY="132.0" prefHeight="26.0" prefWidth="27.0" text="10" />
+                                    <TextField fx:id="textfieldTrendTopN" layoutX="430.0" layoutY="132.0" prefHeight="26.0" prefWidth="27.0" text="10" />
 
-                                    <Button layoutX="112.0" layoutY="175.0" mnemonicParsing="false" onAction="#doTrend" text="REPORT (yet to be implemented)" />
+                                    <Button layoutX="112.0" layoutY="175.0" mnemonicParsing="false" onAction="#doTrend" text="REPORT" />
                                  </children>
                               </AnchorPane>
                            </children>
@@ -157,7 +156,7 @@
                               </RadioButton>
                               <RadioButton fx:id="radioButtonCompatibleFemaleUser" layoutX="256.0" layoutY="173.0" mnemonicParsing="false" text="Female" toggleGroup="$ToggleGroupCompatibleUserGender" />
                               <Label layoutX="68.0" layoutY="209.0" prefHeight="17.0" prefWidth="118.0" text="Your Year of Birth:" />
-                              <IntegerTextField fx:id="textfieldCompatibleUserYOB" layoutX="192.0" layoutY="205.0" prefHeight="26.0" prefWidth="127.0" text="2020" />
+                              <TextField fx:id="textfieldCompatibleUserYOB" layoutX="192.0" layoutY="205.0" prefHeight="26.0" prefWidth="127.0" text="2020" />
                               <Label layoutX="387.0" layoutY="140.0" text="Matched Person Name:" />
                               <TextField fx:id="textfieldCompatibleMatchName" layoutX="527.0" layoutY="135.0" prefHeight="26.0" prefWidth="127.0" text="Beauty" />
                               <Label layoutX="388.0" layoutY="173.0" text="Matched Person Gender: " />

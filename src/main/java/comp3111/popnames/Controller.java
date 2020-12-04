@@ -56,16 +56,16 @@ public class Controller {
     private Tab tabReport3;
     
     @FXML
-    private IntegerTextField textfieldTrendStartYear;
+    private TextField textfieldTrendStartYear;
     
     @FXML
-    private IntegerTextField textfieldTrendEndYear;
+    private TextField textfieldTrendEndYear;
 
     @FXML
     private ToggleGroup ToggleGroupTrendGender;
     
     @FXML
-    private IntegerTextField textfieldTrendTopN;
+    private TextField textfieldTrendTopN;
 
     @FXML
     private Tab tabApp1;
@@ -83,7 +83,7 @@ public class Controller {
     private ToggleGroup ToggleGroupCompatibleUserGender;
     
     @FXML
-    private IntegerTextField textfieldCompatibleUserYOB;
+    private TextField textfieldCompatibleUserYOB;
     
     @FXML
     private TextField textfieldCompatibleMatchName;
@@ -203,6 +203,24 @@ public class Controller {
     		textAreaConsole.setText("The TopN parameter cannot be blank.");	
     		return;
     	}
+    	try {
+            Integer.parseInt(textfieldTrendStartYear.getText());
+        } catch (Exception e) {
+        	textAreaConsole.setText("The start year of the period should contain only integral numbers.");	
+    		return;
+        }
+    	try {
+            Integer.parseInt(textfieldTrendEndYear.getText());
+        } catch (Exception e) {
+        	textAreaConsole.setText("The end year of the period should contain only integral numbers.");	
+    		return;
+        }
+    	try {
+            Integer.parseInt(textfieldTrendTopN.getText());
+        } catch (Exception e) {
+        	textAreaConsole.setText("The TopN parameter should contain only integral numbers.");	
+    		return;
+        }
     	if (textfieldTrendStartYear.getText().trim().charAt(0) == '0') {
     		textAreaConsole.setText("The start year should not start with zero(s).");	
     		return;
@@ -235,13 +253,18 @@ public class Controller {
     	// Print out the output
     	String[] header = {"Name", "Lowest Rank", "Highest Rank", "Gross Trend"};
     	String output = "";
-    	String format = "|%1$-20s|%2$-20s|%3$-20s|%4$-20s|\n";
+    	String format = "|%-20s|%20s|%20s|%20s|\n";
     	output += String.format(format, (Object[]) header);
+    	
+    	String formatRecord = "|%-20s|rank: %s, year: %s|rank: %s, year: %s|%20s|\n";
     	for (String key : oReport.keySet()) {
     		var currentValue = oReport.get(key);
-    		output += currentValue.name + " " + currentValue.lowestRank + " " + currentValue.lowestRankYear + " "
-    					+ currentValue.highestRank + " " + currentValue.highestRankYear + " " + currentValue.grossTrend;
-    		output += "\n";
+    		String[] record = {currentValue.name, Integer.toString(currentValue.lowestRank), Integer.toString(currentValue.lowestRankYear), 
+    				Integer.toString(currentValue.highestRank), Integer.toString(currentValue.highestRankYear), currentValue.grossTrend};
+//    		record += currentValue.name + " " + currentValue.lowestRank + " " + currentValue.lowestRankYear + " "
+//    					+ currentValue.highestRank + " " + currentValue.highestRankYear + " " + currentValue.grossTrend;
+    		output += String.format(formatRecord, (Object[]) record);
+    		// output += "\n";
     	}
     	textAreaConsole.setText(output);
     }
@@ -258,6 +281,12 @@ public class Controller {
     		textAreaConsole.setText("The year of birth cannot be blank.");	
     		return;
     	}
+    	try {
+            Integer.parseInt(textfieldCompatibleUserYOB.getText());
+        } catch (Exception e) {
+        	textAreaConsole.setText("The year of birth should contain only integral numbers.");	
+    		return;
+        }
     	if (textfieldCompatibleUserYOB.getText().trim().charAt(0) == '0') {
     		textAreaConsole.setText("The year of birth should not start with zero(s).");	
     		return;

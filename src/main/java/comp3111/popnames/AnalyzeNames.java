@@ -102,15 +102,11 @@ public class AnalyzeNames {
      *
      * @param int istartYear the start year of the period
      * @param int iendYear the end year of the period
-     * @param RankProperties the gender of interest
+     * @param String igender the gender of interest
      * @param int topN the level of popularity
      * @return A LinkedHashMap<String, RankProperties> that stores name as the key and RankProperties as value
      */
 	 public static LinkedHashMap<String, RankProperties> getTrend(int istartYear, int iendYear, String igender, int topN) {
-		 if (istartYear == 0 || iendYear == 0) {
-			 return null;
-		 }
-
 		 var result = new LinkedHashMap<String, RankProperties>();
 	 	 for (int i = istartYear, j = 1; j <= topN; j++) {
  			var currentProp = new RankProperties(); 
@@ -129,20 +125,24 @@ public class AnalyzeNames {
 	 		 for (String key : result.keySet()) {
 	 			 int currentRank;
 	 			 if (topN >= (currentRank = getRank(i, key, igender))) {		// maintained, then update
-	 				 if (currentRank == result.get(key).highestRank && currentRank == result.get(key).lowestRank)
-	 					 continue;
+	 				 if (currentRank == result.get(key).highestRank && currentRank == result.get(key).lowestRank) {
+	 					result.get(key).highestRank = currentRank;
+	 					result.get(key).highestRankYear = i;
+	 					result.get(key).lowestRank = currentRank;
+	 					result.get(key).lowestRankYear = i;
+	 				 }
 	 				 if (result.get(key).highestRank < currentRank) {		
-	 					if (result.get(key).lowestRank < currentRank){
+	 					if (result.get(key).lowestRank <= currentRank){
 	 						result.get(key).lowestRank = currentRank;
 	 						result.get(key).lowestRankYear = i;
 	 					}
-	 				 } else if (result.get(key).highestRank > currentRank) {
+	 				 } else if (result.get(key).highestRank >= currentRank) {
 	 					result.get(key).highestRank = currentRank;
 						result.get(key).highestRankYear = i;
 	 				 }
 	 				 if (result.get(key).lowestRankYear < result.get(key).highestRankYear) 
 	 					result.get(key).grossTrend = "UP";
-	 				 else 
+	 				 else if (result.get(key).lowestRankYear > result.get(key).highestRankYear) 
 	 					result.get(key).grossTrend = "DOWN";
 	 			 } else {									// remove from map
 	 				deletingName.add(key);
@@ -190,12 +190,25 @@ public class AnalyzeNames {
 		 if (oRankMate == -1)
 			 oRankMate = 1;
 
-//		 System.out.println(Math.abs(oRank));
-//		 System.out.println(Math.abs(oRankMate));
+		 System.out.println(Math.abs(oRank));
+		 System.out.println(Math.abs(oRankMate));
 //		 System.out.println(Math.abs(oRank - oRankMate));
-		 if (oRank > oRankMate)
-			 return ((1 - Math.abs(oRank - oRankMate) / (float)oRank) * 100);
-		 return ((1 - Math.abs(oRank - oRankMate) / (float)oRankMate) * 100);
+//		 if (oRank > oRankMate)
+//			 return ((1 - Math.abs(oRank - oRankMate) / (float)oRank) * 100);
+//		 return ((1 - Math.abs(oRank - oRankMate) / (float)oRankMate) * 100);
+		 return ((1 - Math.abs(oRank - oRankMate) / (float)oRank) * 100);
 	 }
  
+}
+
+/**
+ * A helper class to store the rank properties for implementing getTrend functionality
+ */
+class RankProperties {
+	public String name;
+	public int lowestRank;
+	public int lowestRankYear;
+	public int highestRank;
+	public int highestRankYear;
+	public String grossTrend;
 }
