@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -64,9 +65,18 @@ public class Controller {
 
     @FXML
     private Tab tabReport3;
+    
+    @FXML
+    private TextField textfieldTrendStartYear;
+    
+    @FXML
+    private TextField textfieldTrendEndYear;
 
     @FXML
-    private ToggleGroup T111;
+    private ToggleGroup ToggleGroupTrendGender;
+    
+    @FXML
+    private TextField textfieldTrendTopN;
 
     @FXML
     private Tab tabApp1;
@@ -94,6 +104,25 @@ public class Controller {
 
     @FXML
     private Tab tabApp3;
+    
+    @FXML
+    private TextField textfieldCompatibleUserName;
+    
+    @FXML
+    private ToggleGroup ToggleGroupCompatibleUserGender;
+    
+    @FXML
+    private TextField textfieldCompatibleUserYOB;
+    
+    @FXML
+    private TextField textfieldCompatibleMatchName;
+    
+    @FXML
+    private ToggleGroup ToggleGroupCompatibleMatchGender;
+    
+    @FXML
+    private ToggleGroup ToggleGroupCompatiblePreference;
+    
 
     @FXML
     private TextArea textAreaConsole;
@@ -183,6 +212,143 @@ public class Controller {
     	textAreaConsole.setText(oReport);
     }
     
+
+    /*
+     *  Task 3A
+     *  To be triggered by the "Report" button on the Report3 Tab
+     *  
+     */
+    @FXML
+    void doTrend() {
+    	// Validation
+    	if (textfieldTrendStartYear.getText().trim().isEmpty()) {
+    		textAreaConsole.setText("The start year of the period cannot be blank.");	
+    		return;
+    	}
+    	if (textfieldTrendEndYear.getText().trim().isEmpty()) {
+    		textAreaConsole.setText("The end year of the period cannot be blank.");	
+    		return;
+    	}
+    	if (textfieldTrendTopN.getText().trim().isEmpty()) {
+    		textAreaConsole.setText("The TopN parameter cannot be blank.");	
+    		return;
+    	}
+    	try {
+            Integer.parseInt(textfieldTrendStartYear.getText());
+        } catch (Exception e) {
+        	textAreaConsole.setText("The start year of the period should contain only integral numbers.");	
+    		return;
+        }
+    	try {
+            Integer.parseInt(textfieldTrendEndYear.getText());
+        } catch (Exception e) {
+        	textAreaConsole.setText("The end year of the period should contain only integral numbers.");	
+    		return;
+        }
+    	try {
+            Integer.parseInt(textfieldTrendTopN.getText());
+        } catch (Exception e) {
+        	textAreaConsole.setText("The TopN parameter should contain only integral numbers.");	
+    		return;
+        }
+    	if (textfieldTrendStartYear.getText().trim().charAt(0) == '0') {
+    		textAreaConsole.setText("The start year should not start with zero(s).");	
+    		return;
+    	}
+    	if (textfieldTrendEndYear.getText().trim().charAt(0) == '0') {
+    		textAreaConsole.setText("The end year should not start with zero(s).");	
+    		return;
+    	}
+    	if (textfieldTrendTopN.getText().trim().charAt(0) == '0') {
+    		textAreaConsole.setText("The TopN parameter should not start with zero(s).");	
+    		return;
+    	}
+    	int istartYear = Integer.parseInt(textfieldTrendStartYear.getText());
+    	int iendYear = Integer.parseInt(textfieldTrendEndYear.getText());
+    	String igender = ((RadioButton) ToggleGroupTrendGender.getSelectedToggle()).getText().contentEquals("Male") ? "M" : "F";
+    	int topN = Integer.parseInt(textfieldTrendTopN.getText());
+    	
+    	if (istartYear < 1880 || istartYear > 2019 || iendYear < 1880 || iendYear > 2019) {
+    		textAreaConsole.setText("The period should be in between 1880 to 2019 inclusively.");	
+    		return;
+    	}
+    	if (topN <= 0) {
+    		textAreaConsole.setText("The TopN parameter should larger than 0.");	
+    		return;
+    	}
+    	
+    	// Call the calculation method
+    	var oReport = AnalyzeNames.getTrend(istartYear, iendYear, igender, topN);
+    	
+    	// Print out the output
+    	String[] header = {"Name", "Lowest Rank", "Highest Rank", "Gross Trend"};
+    	String output = "";
+    	String format = "|%s\t\t|%s\t\t\t|%s\t\t\t|%s\t\t\n";
+    	output += String.format(format, (Object[]) header);
+    	
+    	String formatRecord = "|%s\t\t|rank: %s, year: %s\t\t|rank: %s, year: %s\t\t|%s\t\t\n";
+    	for (String key : oReport.keySet()) {
+    		var currentValue = oReport.get(key);
+    		String[] record = {key, Integer.toString(currentValue.lowestRank), Integer.toString(currentValue.lowestRankYear), 
+    				Integer.toString(currentValue.highestRank), Integer.toString(currentValue.highestRankYear), currentValue.grossTrend};
+    		output += String.format(formatRecord, (Object[]) record);
+    	}
+    	textAreaConsole.setText(output);
+    }
+    
+    /**
+     *  Task 6
+     *  To be triggered by the "Show Compatibility Score" button on the Application 3 Tab
+     *  
+     */
+    @FXML
+    void doShowCompatibilityScore() {
+    	// Validation
+    	if (textfieldCompatibleUserYOB.getText().trim().isEmpty()) {
+    		textAreaConsole.setText("The year of birth cannot be blank.");	
+    		return;
+    	}
+    	try {
+            Integer.parseInt(textfieldCompatibleUserYOB.getText());
+        } catch (Exception e) {
+        	textAreaConsole.setText("The year of birth should contain only integral numbers.");	
+    		return;
+        }
+    	if (textfieldCompatibleUserYOB.getText().trim().charAt(0) == '0') {
+    		textAreaConsole.setText("The year of birth should not start with zero(s).");	
+    		return;
+    	}
+    	String iName =  textfieldCompatibleUserName.getText();
+    	String igender = ((RadioButton) ToggleGroupCompatibleUserGender.getSelectedToggle()).getText().contentEquals("Male") ? "M" : "F";
+    	int iYOB = Integer.parseInt(textfieldCompatibleUserYOB.getText());
+    	
+    	String iNameMate = textfieldCompatibleMatchName.getText();
+    	String iGenderMate = ((RadioButton) ToggleGroupCompatibleMatchGender.getSelectedToggle()).getText().contentEquals("Male") ? "M" : "F";
+    	String iPreference = ((RadioButton) ToggleGroupCompatiblePreference.getSelectedToggle()).getText();
+    	
+    	if (iYOB < 1880 || iYOB > 2019) {
+    		textAreaConsole.setText("Your year of birth should be in between 1880 to 2019 inclusively.");	
+    		return;
+    	}
+    	if (iYOB == 1880 && iPreference.equals("Older")) {
+    		textAreaConsole.setText("You could not have a soulmate younger than you, please change your preference.");	
+    		return;
+    	}
+    	if (iYOB == 2019 && iPreference.equals("Younger")) {
+    		textAreaConsole.setText("You could not have a soulmate older than you, please change your preference.");	
+    		return;
+    	}
+    	
+    	// Call the calculation method
+    	var oApp = AnalyzeNames.calculateCompatiblityScore(iName, igender, iYOB, iNameMate, iGenderMate, iPreference);
+    	
+    	// Print out the output
+    	String output = "";
+    	output += "(0%: Not Compatible; 100%: Perfect Match)\n\n";
+    	output += "Compatiblity Score = " + String.format("%.2f", oApp) + "%";
+    	textAreaConsole.setText(output);
+    }
+
     /**
      * Task One
      * To be triggered by the "REPORT" button on the Reporting1 Tab
@@ -286,5 +452,6 @@ public class Controller {
     	 
     	 textAreaConsole.setText(String.format("Boy's Name: %s\nGirl's Name: %s", boyName, girlName)); 
      }
+
 }
 
