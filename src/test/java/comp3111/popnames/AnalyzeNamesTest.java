@@ -51,8 +51,7 @@ public class AnalyzeNamesTest {
     	actualResult.put("Noah", new RankProperties(7, 2010, 1, 2016, "UP"));
     	for (String key : testResult.keySet()) {
     		if (!testResult.get(key).equals(actualResult.get(key)))
-    			System.out.print(key);
-    		
+    			assertTrue(false);
     	}
     	assertTrue(true);
     }

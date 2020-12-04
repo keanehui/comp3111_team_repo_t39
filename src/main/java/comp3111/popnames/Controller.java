@@ -253,18 +253,15 @@ public class Controller {
     	// Print out the output
     	String[] header = {"Name", "Lowest Rank", "Highest Rank", "Gross Trend"};
     	String output = "";
-    	String format = "|%-20s|%20s|%20s|%20s|\n";
+    	String format = "|%s\t\t|%s\t\t\t|%s\t\t\t|%s\t\t\n";
     	output += String.format(format, (Object[]) header);
     	
-    	String formatRecord = "|%-20s|rank: %s, year: %s|rank: %s, year: %s|%20s|\n";
+    	String formatRecord = "|%s\t\t|rank: %s, year: %s\t\t|rank: %s, year: %s\t\t|%s\t\t\n";
     	for (String key : oReport.keySet()) {
     		var currentValue = oReport.get(key);
     		String[] record = {key, Integer.toString(currentValue.lowestRank), Integer.toString(currentValue.lowestRankYear), 
     				Integer.toString(currentValue.highestRank), Integer.toString(currentValue.highestRankYear), currentValue.grossTrend};
-//    		record += currentValue.name + " " + currentValue.lowestRank + " " + currentValue.lowestRankYear + " "
-//    					+ currentValue.highestRank + " " + currentValue.highestRankYear + " " + currentValue.grossTrend;
     		output += String.format(formatRecord, (Object[]) record);
-    		// output += "\n";
     	}
     	textAreaConsole.setText(output);
     }
@@ -317,7 +314,7 @@ public class Controller {
     	
     	// Print out the output
     	String output = "";
-    	output += "(0%: Not Compatible; 100%: Perfect Match)\n";
+    	output += "(0%: Not Compatible; 100%: Perfect Match)\n\n";
     	output += "Compatiblity Score = " + String.format("%.2f", oApp) + "%";
     	textAreaConsole.setText(output);
     }
