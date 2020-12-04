@@ -2,6 +2,8 @@ package comp3111.popnames;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.csv.*;
 import edu.duke.*;
@@ -97,7 +99,7 @@ public class AnalyzeNames {
 	     	return "information on the name at the specified rank is not available";
 	 }
 	 
-	 /**
+	 /*
      * Identify the names that have maintained a high level of popularity within Top N over a given period.
      *
      * @param int istartYear the start year of the period
