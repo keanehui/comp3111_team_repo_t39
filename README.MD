@@ -9,12 +9,15 @@
 	<li>Email: kawonghui@gmail.com</li>
 	<li>Github: keanehui</li>
 	<li>Branch: nk_feature1</li>
-	<li>Task: 1, 2</li>
+	<li>Task: 1, 4</li>
 </ul>
 
-<p>2. member2</p>
+<p>2. LUK, Yung Kwan</p>
 <ul>
-	<li>Email: email2@abc.com</li>
+	<li>Email: littlebappe@gmail.com</li>
+	<li>Github: Kyl117</li>
+	<li>Branch: Kylian_branch</li>
+	<li>Task: 2, 5</li>
 </ul>
 
 <p>3. member3</p>
