@@ -93,5 +93,49 @@ public class AnalyzeNames {
 	     else
 	     	return "information on the name at the specified rank is not available";
 	 }
- 
+	 
+	 /*
+	  * Task 2
+	  */
+	 public static int getcount(int year, String name, String gender) {
+		 boolean found = false;
+		 int count = 0;
+		 int rank = 1;
+	     for (CSVRecord rec : getFileParser(year)) {
+	         // Increment rank if gender matches param
+	         if (rec.get(1).equals(gender)) {
+	             // Return count if name matches param
+	             if (rec.get(0).equals(name)) {
+	             	found = true;
+	             	count = Integer.parseInt(rec.get(2));
+	             	break;
+	             }
+	             rank++;
+	         }
+	     }
+	     if (found)
+	     	return count;
+	     else
+	     	return -1;
+	 }
+	 
+	 public static int getbabynumber(int year) {
+		 int totalBirths = 0;
+	     for (CSVRecord rec : getFileParser(year)) {
+	    	 int numBorn = Integer.parseInt(rec.get(2));
+				totalBirths += numBorn;
+	     }
+	     	return totalBirths;
+	 }
+	 
+	 /*
+	  * Task5
+	  */
+	 
+	 public static String NK_T5algorithm(String Name,String Gender,int YOB,String Gender_soulmate,String Preference) {
+		 int oRank = (getRank(YOB,Name,Gender)==-1)? 1:getRank(YOB,Name,Gender);
+		 int oYOB = (Preference == "O")? YOB-1:YOB+1;
+		 String oName = getName(oYOB, oRank, Gender_soulmate);
+		 return oName;
+	 }
 }

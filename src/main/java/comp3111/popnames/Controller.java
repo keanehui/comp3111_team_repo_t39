@@ -5,6 +5,8 @@ package comp3111.popnames;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Labeled;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -69,7 +71,42 @@ public class Controller {
     @FXML
     private TextArea textAreaConsole;
     
+    /**
+     * Task 2 private data
+     */
+    @FXML
+    private TextField textfieldNamereport2;
+    
+    @FXML
+    private TextField textfieldfirstyear_report2;
+    
+    @FXML
+    private TextField textfieldlastyear_report2;
 
+    @FXML
+    private Button report2;
+    
+    /**
+     *  Task 5 private data
+     */
+    @FXML
+    private ToggleGroup T51;
+    
+    @FXML
+    private ToggleGroup T52;
+    
+    @FXML
+    private ToggleGroup T53;
+    
+    @FXML
+    private TextField textfieldname_app2;
+    
+    @FXML
+    private TextField textfieldyear_app2;
+
+    @FXML
+    private Button report5;
+    
     /**
      *  Task Zero
      *  To be triggered by the "Summary" button on the Task Zero Tab 
@@ -154,6 +191,60 @@ public class Controller {
     	textAreaConsole.setText(oReport);
     }
     
-
+    /**
+     *  Task 2
+     * 
+     */
+    @FXML
+    void reporting2() {
+    	String oReport = "";
+    	String iName = textfieldNamereport2.getText();
+    	int first_iyear = Integer.parseInt(textfieldfirstyear_report2.getText());
+    	int last_iyear = Integer.parseInt(textfieldlastyear_report2.getText());
+    	String iGender = ((RadioButton) T11.getSelectedToggle()).getText().contentEquals("Male") ? "M" : "F";
+    	int count_times = 0;
+    	
+    	if (first_iyear<1880 || last_iyear>2019 ||first_iyear>last_iyear) {
+    		oReport = String.format("The period is invalid. Please enter again.");
+    	}
+    	
+    	else {
+        	oReport = String.format("|Year\t\t|Rank\t\t|Count\t\t|Percentage\n");
+        	oReport += String.format("_________________________________________________\n");
+        	for(int this_year=last_iyear; this_year>=first_iyear;this_year--)
+        	{
+        		int count = AnalyzeNames.getcount(this_year, iName, iGender);
+        		double temp_count = count;
+        		double babynumber = AnalyzeNames.getbabynumber(this_year);
+        		double percentage = (temp_count/babynumber)*100;
+        		oReport += String.format("%d\t\t%d\t\t\t%d\t\t\t%f\n",this_year,AnalyzeNames.getRank(this_year, iName, iGender),count,percentage);
+        		if(count == -1) {count = 0;}
+        		count_times += count;
+        	}
+        	if (count_times == 0) {
+        		oReport = String.format("No people used the name in the period.");
+        	}
+    	}    	
+    	textAreaConsole.setText(oReport);
+    }
+    
+    /**
+     * Task 5 
+     */
+    @FXML
+    void reporting5() {
+    	String oReport = "";
+    	String iName = textfieldname_app2.getText();
+    	String iGender = ((RadioButton) T51.getSelectedToggle()).getText().contentEquals("Male") ? "M" : "F";
+    	int iYOB = Integer.parseInt(textfieldyear_app2.getText());
+    	String iGender_soulmate = ((RadioButton) T52.getSelectedToggle()).getText().contentEquals("Male") ? "M" : "F";
+    	String iPreference = ((RadioButton) T53.getSelectedToggle()).getText().contentEquals("Older") ? "O" : "Y";
+    	String ouput_name = AnalyzeNames.NK_T5algorithm(iName, iGender, iYOB, iGender_soulmate, iPreference);
+    	oReport = String.format("The recommended name is %s.", ouput_name);
+    	textAreaConsole.setText(oReport);
+    	
+    }
+    
+    
 }
 
