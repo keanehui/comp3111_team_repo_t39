@@ -99,7 +99,7 @@ public class AnalyzeNames {
 	     	return "information on the name at the specified rank is not available";
 	 }
 	 
-	 /**
+	 /*
      * Identify the names that have maintained a high level of popularity within Top N over a given period.
      *
      * @param int istartYear the start year of the period
@@ -156,9 +156,9 @@ public class AnalyzeNames {
 	 * Compute oYOB which equals to (iYOB+1) if (iPreference is Younger), or (iYOB-1) if (iPreference is Older)
 	 * Compute oRankMate which equals to the iGenderMate ranking of iNameMate in oYOB (equals to 1, if iNameMate is not ranked in oYOB)
 	 * If oRank is larger than oRankMate then
-	 * Compute oScore which equals to (1 - abs(oRank - oRankMate) / oRank) * 100%
+	 * Compute oScore which equals to (1 - abs(oRank – oRankMate) / oRank) * 100%
 	 * If oRankMate is larger than oRank then
-	 * Compute oScore which equals to (1 - abs(oRank - oRankMate) / oRankMate) * 100%
+	 * Compute oScore which equals to (1 - abs(oRank – oRankMate) / oRankMate) * 100%
 	 * In this way, the algorithm will provide a score of compatibility in range of 0%-100% (0%: Not Compatible; 100%: Perfect Match)
      *
      * @param String iName Name of the user

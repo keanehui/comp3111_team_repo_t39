@@ -183,7 +183,7 @@ public class Controller {
     	textAreaConsole.setText(oReport);
     }
     
-    /**
+    /*
      *  Task 3A
      *  To be triggered by the "Report" button on the Report3 Tab
      *  
