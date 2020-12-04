@@ -259,7 +259,7 @@ public class Controller {
     	String formatRecord = "|%-20s|rank: %s, year: %s|rank: %s, year: %s|%20s|\n";
     	for (String key : oReport.keySet()) {
     		var currentValue = oReport.get(key);
-    		String[] record = {currentValue.name, Integer.toString(currentValue.lowestRank), Integer.toString(currentValue.lowestRankYear), 
+    		String[] record = {key, Integer.toString(currentValue.lowestRank), Integer.toString(currentValue.lowestRankYear), 
     				Integer.toString(currentValue.highestRank), Integer.toString(currentValue.highestRankYear), currentValue.grossTrend};
 //    		record += currentValue.name + " " + currentValue.lowestRank + " " + currentValue.lowestRankYear + " "
 //    					+ currentValue.highestRank + " " + currentValue.highestRankYear + " " + currentValue.grossTrend;
@@ -299,12 +299,26 @@ public class Controller {
     	String iGenderMate = ((RadioButton) ToggleGroupCompatibleMatchGender.getSelectedToggle()).getText().contentEquals("Male") ? "M" : "F";
     	String iPreference = ((RadioButton) ToggleGroupCompatiblePreference.getSelectedToggle()).getText();
     	
+    	if (iYOB < 1880 || iYOB > 2019) {
+    		textAreaConsole.setText("Your year of birth should be in between 1880 to 2019 inclusively.");	
+    		return;
+    	}
+    	if (iYOB == 1880 && iPreference.equals("Older")) {
+    		textAreaConsole.setText("You could not have a soulmate younger than you, please change your preference.");	
+    		return;
+    	}
+    	if (iYOB == 2019 && iPreference.equals("Younger")) {
+    		textAreaConsole.setText("You could not have a soulmate older than you, please change your preference.");	
+    		return;
+    	}
+    	
     	// Call the calculation method
     	var oApp = AnalyzeNames.calculateCompatiblityScore(iName, igender, iYOB, iNameMate, iGenderMate, iPreference);
     	
     	// Print out the output
     	String output = "";
-    	output += "Compatiblity Score = " + Float.toString(oApp) + "%";
+    	output += "(0%: Not Compatible; 100%: Perfect Match)\n";
+    	output += "Compatiblity Score = " + String.format("%.2f", oApp) + "%";
     	textAreaConsole.setText(output);
     }
 

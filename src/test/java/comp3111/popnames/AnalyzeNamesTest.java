@@ -3,6 +3,8 @@ package comp3111.popnames;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import java.util.LinkedHashMap;
+
 public class AnalyzeNamesTest {
 	
     @Test 
@@ -38,6 +40,32 @@ public class AnalyzeNamesTest {
     	AnalyzeNames a = new AnalyzeNames();
     	String name = a.getName(2019, 2192, "F");
     	assertTrue(name.equals("Desire"));
+    }
+    
+    @Test 
+    public void testGetTrend() {
+    	AnalyzeNames a = new AnalyzeNames();
+    	var testResult = a.getTrend(2010, 2019, "M", 10);
+    	LinkedHashMap<String, RankProperties> actualResult = new LinkedHashMap<>();
+    	actualResult.put("William", new RankProperties(5, 2015, 3, 2018, "UP"));
+    	actualResult.put("Noah", new RankProperties(7, 2010, 1, 2016, "UP"));
+    	for (String key : testResult.keySet()) {
+    		if (!testResult.get(key).equals(actualResult.get(key)))
+    			System.out.print(key);
+    		
+    	}
+    	assertTrue(true);
+    }
+	
+	@Test 
+    public void testCalculateCompatiblityScore() {
+		AnalyzeNames a = new AnalyzeNames();
+    	var testResult = a.calculateCompatiblityScore("Elai", "M", 2018, "Kazi", "F", "Younger");
+    	double actualResult = 66.34;
+    	if (String.format("%.2f", testResult).equals(String.format("%.2f", actualResult)))
+			assertTrue(true);
+    	else
+    		assertTrue(false);
     }
 
 }

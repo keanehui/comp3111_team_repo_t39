@@ -156,16 +156,16 @@
                               </RadioButton>
                               <RadioButton fx:id="radioButtonCompatibleFemaleUser" layoutX="256.0" layoutY="173.0" mnemonicParsing="false" text="Female" toggleGroup="$ToggleGroupCompatibleUserGender" />
                               <Label layoutX="68.0" layoutY="209.0" prefHeight="17.0" prefWidth="118.0" text="Your Year of Birth:" />
-                              <TextField fx:id="textfieldCompatibleUserYOB" layoutX="192.0" layoutY="205.0" prefHeight="26.0" prefWidth="127.0" text="2020" />
+                              <TextField fx:id="textfieldCompatibleUserYOB" layoutX="192.0" layoutY="205.0" prefHeight="26.0" prefWidth="127.0" text="2016" />
                               <Label layoutX="387.0" layoutY="140.0" text="Matched Person Name:" />
                               <TextField fx:id="textfieldCompatibleMatchName" layoutX="527.0" layoutY="135.0" prefHeight="26.0" prefWidth="127.0" text="Beauty" />
                               <Label layoutX="388.0" layoutY="173.0" text="Matched Person Gender: " />
-                              <RadioButton fx:id="radioButtonCompatibleMaleMatch" layoutX="524.0" layoutY="173.0" mnemonicParsing="false" selected="true" text="Male">
+                              <RadioButton fx:id="radioButtonCompatibleMaleMatch" layoutX="524.0" layoutY="173.0" mnemonicParsing="false" text="Male">
                                  <toggleGroup>
                                     <ToggleGroup fx:id="ToggleGroupCompatibleMatchGender" />
                                  </toggleGroup>
                               </RadioButton>
-                              <RadioButton fx:id="radioButtonCompatibleFemaleMatch" layoutX="601.0" layoutY="174.0" mnemonicParsing="false" text="Female" toggleGroup="$ToggleGroupCompatibleMatchGender" />
+                              <RadioButton fx:id="radioButtonCompatibleFemaleMatch" layoutX="601.0" layoutY="174.0" mnemonicParsing="false" selected="true" text="Female" toggleGroup="$ToggleGroupCompatibleMatchGender" />
                               <Label layoutX="388.0" layoutY="209.0" text="Preference:" />
                               <RadioButton fx:id="radioButtonCompatibleYoungerMatch" layoutX="523.0" layoutY="209.0" mnemonicParsing="false" selected="true" text="Younger">
                                  <toggleGroup>

@@ -109,15 +109,8 @@ public class AnalyzeNames {
 	 public static LinkedHashMap<String, RankProperties> getTrend(int istartYear, int iendYear, String igender, int topN) {
 		 var result = new LinkedHashMap<String, RankProperties>();
 	 	 for (int i = istartYear, j = 1; j <= topN; j++) {
- 			var currentProp = new RankProperties(); 
  			var currentName = getName(i, j, igender);
- 			currentProp.name = currentName;
- 			currentProp.highestRank = j;
- 			currentProp.highestRankYear = i;
- 			currentProp.lowestRank = j;
- 			currentProp.lowestRankYear = i;
- 			currentProp.grossTrend = "FLAT";
- 			result.put(currentName, currentProp);
+ 			result.put(currentName, new RankProperties(j, i, j, i, "FLAT"));
  		 }
 
 	 	 for (int i = istartYear + 1; i <= iendYear; i++) {
@@ -156,6 +149,15 @@ public class AnalyzeNames {
 	 
 	 /**
      * Calculate Scores for Compatible Pairs
+     * The algorithm is described as follows.
+     * Compute oRank which equals to the iGender ranking of iName in iYOB (equals to 1, if iName is not ranked in iYOB)
+	 * Compute oYOB which equals to (iYOB+1) if (iPreference is Younger), or (iYOB-1) if (iPreference is Older)
+	 * Compute oRankMate which equals to the iGenderMate ranking of iNameMate in oYOB (equals to 1, if iNameMate is not ranked in oYOB)
+	 * If oRank is larger than oRankMate then
+	 * Compute oScore which equals to (1 - abs(oRank – oRankMate) / oRank) * 100%
+	 * If oRankMate is larger than oRank then
+	 * Compute oScore which equals to (1 - abs(oRank – oRankMate) / oRankMate) * 100%
+	 * In this way, the algorithm will provide a score of compatibility in range of 0%-100% (0%: Not Compatible; 100%: Perfect Match)
      *
      * @param String iName Name of the user
      * @param String iGender Gender of the user
@@ -166,37 +168,21 @@ public class AnalyzeNames {
      * @return A float number that storing the calculated compatibility score
      */
 	 public static float calculateCompatiblityScore(String iName, String iGender, int iYOB, String iNameMate, String iGenderMate, String iPreference) {
-		 int oRank, oRankMate;
+		 int oRank = getRank(iYOB, iName, iGender);
+		 oRank = oRank == -1 ? 1 : oRank;
 		 
-		 try {
-		 oRank = getRank(iYOB, iName, iGender);
-		 } catch (Exception e) {
-			 oRank = 1;
-		 }
-		 if (oRank == -1)
-			 oRank = 1;
+		 int oYOB = iPreference.equals("Younger") ? iYOB + 1 : iYOB - 1;
 
-		 int oYOB;
-		 if (iPreference == "Younger")
-			 oYOB = iYOB + 1;
-		 else 
-			 oYOB = iYOB - 1;
+		 int oRankMate = getRank(oYOB, iNameMate, iGenderMate);
+		 oRankMate = oRankMate == -1 ? 1 : oRankMate;
+
+		 System.out.println(oRankMate);
+		 System.out.println(oRank);
+		 System.out.println(oYOB);
 		 
-		 try {
-			 oRankMate = getRank(oYOB, iNameMate, iGenderMate);
-		 } catch (Exception e) {
-			 oRankMate = 1;
-		 }
-		 if (oRankMate == -1)
-			 oRankMate = 1;
-
-		 System.out.println(Math.abs(oRank));
-		 System.out.println(Math.abs(oRankMate));
-//		 System.out.println(Math.abs(oRank - oRankMate));
-//		 if (oRank > oRankMate)
-//			 return ((1 - Math.abs(oRank - oRankMate) / (float)oRank) * 100);
-//		 return ((1 - Math.abs(oRank - oRankMate) / (float)oRankMate) * 100);
-		 return ((1 - Math.abs(oRank - oRankMate) / (float)oRank) * 100);
+		 if (oRank > oRankMate)
+			 return ((1 - Math.abs(oRank - oRankMate) / (float)oRank) * 100);
+		 return ((1 - Math.abs(oRank - oRankMate) / (float)oRankMate) * 100);
 	 }
  
 }
@@ -211,4 +197,20 @@ class RankProperties {
 	public int highestRank;
 	public int highestRankYear;
 	public String grossTrend;
+	
+	RankProperties(int lowestRank, int lowestRankYear, int highestRank, int highestRankYear, String grossTrend){
+		this.lowestRank = lowestRank;
+		this.lowestRankYear = lowestRankYear;
+		this.highestRank = highestRank;
+		this.highestRankYear = highestRankYear;
+		this.grossTrend = grossTrend;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		RankProperties another = (RankProperties) o;
+		return lowestRank == another.lowestRank && lowestRankYear == another.lowestRankYear
+				&& highestRank == another.highestRank && highestRankYear == another.highestRankYear
+				&& grossTrend.equals(another.grossTrend);
+	}
 }
