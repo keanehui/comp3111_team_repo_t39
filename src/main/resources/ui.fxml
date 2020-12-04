@@ -46,7 +46,7 @@
                               <Label layoutX="79.0" layoutY="44.0" />
                               <TextArea layoutX="96.0" layoutY="24.0" prefHeight="42.0" prefWidth="335.0" text="Generate a brief report in response to the queries on the most popular names registered at birth over a given period." wrapText="true" />
                               <Label layoutX="96.0" layoutY="100.0" text="Top N (N&gt;=1): " />
-                              <TextField layoutX="178.0" layoutY="96.0" prefHeight="26.0" prefWidth="27.0" text="10" />
+                              <TextField fx:id="textfieldTopN" layoutX="178.0" layoutY="96.0" prefHeight="26.0" prefWidth="27.0" text="10" />
                               <Label layoutX="253.0" layoutY="100.0" text="Gender: " />
                               <RadioButton layoutX="308.0" layoutY="100.0" mnemonicParsing="false" selected="true" text="Male">
                                  <toggleGroup>
@@ -55,10 +55,10 @@
                               </RadioButton>
                               <RadioButton layoutX="360.0" layoutY="100.0" mnemonicParsing="false" text="Female" toggleGroup="$T1" />
                               <Label layoutX="96.0" layoutY="132.0" text="Period (1880 - 2019): " />
-                              <TextField layoutX="276.0" layoutY="126.0" prefHeight="26.0" prefWidth="43.0" text="1945" />
-                              <TextField layoutX="210.0" layoutY="126.0" prefHeight="26.0" prefWidth="43.0" text="1941" />
+                              <TextField fx:id="textfieldToYear" layoutX="276.0" layoutY="126.0" prefHeight="26.0" prefWidth="43.0" text="1945" />
+                              <TextField fx:id="textfieldFromYear" layoutX="210.0" layoutY="126.0" prefHeight="26.0" prefWidth="43.0" text="1941" />
                               <Label layoutX="258.0" layoutY="130.0" text="to" />
-                              <Button layoutX="96.0" layoutY="169.0" mnemonicParsing="false" text="REPORT (yet to be implemented)" />
+                              <Button fx:id="buttonReport1" layoutX="96.0" layoutY="169.0" mnemonicParsing="false" text="REPORT" onAction="#doTopNWithGender" />
                            </children>
                         </AnchorPane>
                     </content>
@@ -127,9 +127,21 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="412.0" prefWidth="719.0">
                            <children>
-                              <TextArea layoutX="40.0" layoutY="26.0" prefHeight="242.0" prefWidth="638.0" text="Develop and implement an online service using empirical data to help make informed decisions on naming their newborn babies.  Sample Scenario of Application: (i) Parents seeking advices on naming their babies; (ii) A couple seeking advices on naming their pets&#10;&#10;Input&#10;* iDadName, iMomName: Names of the baby’s dad and mom&#10;* iDadYOB, iMomYOB: Years of birth of the baby’s dad and mom&#10;* iVintageYear (optional): A year to be chosen from 1880 to 2019; If not chosen, set the value of iVintageYear to 2019&#10;&#10;Output&#10;* oBoyName: Recommended name for baby boy according to the NK-T4 Algorithm&#10;* oGirlName: Recommended name for baby girl according to the NK-T4 Algorithm&#10;* plus, WOW factor on user experience and algorithm design!" wrapText="true" />
+                              <TextArea layoutX="40.0" layoutY="26.0" prefHeight="75.0" prefWidth="638.0" text="Name Generateor&#10;&#10;Please provide parent's name and date of birth below and hit the Get Child's Name button.&#10;" wrapText="true" />
+                           	  <Label layoutX="15" layoutY="150.0" text="Dad's name: " />
+                        	  <TextField fx:id="textfieldDadName" layoutX="90" layoutY="145.0" prefHeight="26.0" prefWidth="43.0" text="Alex" />
+                        	  <Label layoutX="180" layoutY="150.0" text="Dad's year of birth: " />
+                        	  <TextField fx:id="textfieldDadYOB" layoutX="290" layoutY="145.0" prefHeight="26.0" prefWidth="43.0" text="1993" />
+                           	  <Label layoutX="370" layoutY="150.0" text="Mum's name: " />
+                        	  <TextField fx:id="textfieldMumName" layoutX="450" layoutY="145.0" prefHeight="26.0" prefWidth="43.0" text="Amy" />
+                           	  <Label layoutX="535" layoutY="150.0" text="Mum's year of birth: " />
+                        	  <TextField fx:id="textfieldMumYOB" layoutX="650" layoutY="145.0" prefHeight="26.0" prefWidth="43.0" text="1994" />
+                           	  <Label layoutX="195" layoutY="220.0" text="Vintage Year(Optional, 1880-2019): " />
+                        	  <TextField fx:id="textfieldVintageYear" layoutX="400" layoutY="215.0" prefHeight="26.0" prefWidth="43.0" text=""  />
+                           	  <Button fx:id="buttonGetChildName" layoutX="250.0" layoutY="280.0" prefWidth="200" mnemonicParsing="false" text="Get Child's Name" onAction="#doGetChildName" />
                            </children>
                         </AnchorPane>
+                        
                     </content>
                   </Tab>
                   <Tab fx:id="tabApp2" text="Application 2">
