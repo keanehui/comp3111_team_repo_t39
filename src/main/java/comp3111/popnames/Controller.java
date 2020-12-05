@@ -385,11 +385,11 @@ public class Controller {
 			return;
 		}
 		if (iYOB == 1880 && iPreference.equals("Older")) {
-			textAreaConsole.setText("You could not have a soulmate younger than you, please change your preference.");	
+			textAreaConsole.setText("You could not have a soulmate older than you, please change your preference.");	
 			return;
 		}
 		if (iYOB == 2019 && iPreference.equals("Younger")) {
-			textAreaConsole.setText("You could not have a soulmate older than you, please change your preference.");	
+			textAreaConsole.setText("You could not have a soulmate younger than you, please change your preference.");	
 			return;
 		}
 
