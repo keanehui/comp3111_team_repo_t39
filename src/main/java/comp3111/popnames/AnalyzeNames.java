@@ -119,11 +119,11 @@ public class AnalyzeNames {
 	 /**
      * Task 3A: Identify the names that have maintained a high level of popularity within Top N over a given period.
      *
-     * @param int istartYear the start year of the period
-     * @param int iendYear the end year of the period
-     * @param String igender the gender of interest
-     * @param int topN the level of popularity
-     * @return A LinkedHashMap<String, RankProperties> that stores name as the key and RankProperties as value
+     * @param istartYear the start year of the period
+     * @param iendYear the end year of the period
+     * @param igender the gender of interest
+     * @param topN the level of popularity
+     * @return A LinkedHashMap that stores name as the key and RankProperties as value
      */
 	 public static LinkedHashMap<String, RankProperties> getTrend(int istartYear, int iendYear, String igender, int topN) {
 		 var result = new LinkedHashMap<String, RankProperties>();
@@ -170,22 +170,22 @@ public class AnalyzeNames {
 	 
 	 /**
      * Task 6: Calculate Scores for Compatible Pairs
-     * The algorithm is described as follows.
-     * Compute oRank which equals to the iGender ranking of iName in iYOB (equals to 1, if iName is not ranked in iYOB)
-	   * Compute oYOB which equals to (iYOB+1) if (iPreference is Younger), or (iYOB-1) if (iPreference is Older)
-	   * Compute oRankMate which equals to the iGenderMate ranking of iNameMate in oYOB (equals to 1, if iNameMate is not ranked in oYOB)
-	   * If oRank is larger than oRankMate then
-	   * Compute oScore which equals to (1 - abs(oRank -oRankMate) / oRank) * 100%
-	   * If oRankMate is larger than oRank then
-	   * Compute oScore which equals to (1 - abs(oRank - oRankMate) / oRankMate) * 100%
-	   * In this way, the algorithm will provide a score of compatibility in range of 0%-100% (0%: Not Compatible; 100%: Perfect Match)
+     * <p>The algorithm is described as follows.
+     * <p>Compute oRank which equals to the iGender ranking of iName in iYOB (equals to 1, if iName is not ranked in iYOB).
+	   * <p>Compute oYOB which equals to (iYOB+1) if (iPreference is Younger), or (iYOB-1) if (iPreference is Older).
+	   * <p>Compute oRankMate which equals to the iGenderMate ranking of iNameMate in oYOB (equals to 1, if iNameMate is not ranked in oYOB).
+	   * <p>If oRank is larger than oRankMate then,
+	   * <p>Compute oScore which equals to (1 - abs(oRank -oRankMate) / oRank) * 100%.
+	   * <p>If oRankMate is larger than oRank then,
+	   * <p>Compute oScore which equals to (1 - abs(oRank - oRankMate) / oRankMate) * 100%.
+	   * <p>In this way, the algorithm will provide a score of compatibility in range of 0%-100% (0%: Not Compatible; 100%: Perfect Match).
      *
-     * @param String iName Name of the user
-     * @param String iGender Gender of the user
-     * @param int iYOB Year of Birth of the user
-     * @param String iNameMate Name of the person to be matched
-     * @param String iGenderMate Gender of the person to be matched
-     * @param String iPreference user's preference on either have a younger or older soulmate
+     * @param iName Name of the user
+     * @param iGender Gender of the user
+     * @param iYOB Year of Birth of the user
+     * @param iNameMate Name of the person to be matched
+     * @param iGenderMate Gender of the person to be matched
+     * @param iPreference user's preference on either have a younger or older soulmate
      * @return A float number that storing the calculated compatibility score
      */
 	 public static float calculateCompatiblityScore(String iName, String iGender, int iYOB, String iNameMate, String iGenderMate, String iPreference) {
