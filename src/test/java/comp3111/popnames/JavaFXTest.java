@@ -64,125 +64,225 @@ public class JavaFXTest extends ApplicationTest {
 		assertTrue(s.equals("David"));
 	}
 	
-//	@Test
-//	public void testReport3ABlankInputValidation() {	
-//		clickOn("#tabReport3A");
-//		TextField input;
-//		String s1, s2;
-//		int counter = 0;
-//		
-//		input = (TextField)s.lookup("#textfieldTrendStartYear");
-//		input.setText("");
-//		clickOn("#ButtonDoTrend");
-//		s1 = t.getText();
-//		s2 = "The start year of the period should not be blank.";
-//		if (s1.equals(s2))
-//			counter++;
-//		input.setText("2000");
+	@Test
+	public void testReport3ABlankInputValidation() {	
+		clickOn("#tabReport3A");
+		TextField input;
+		String s1, s2;
+		int counter = 0;
+		
+		input = (TextField)s.lookup("#textfieldTrendStartYear");
+		input.setText("");
+		clickOn("#ButtonDoTrend");
+		s1 = t.getText();
+		s2 = "The start year of the period should not be blank.";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("2000");
 //		sleep(1000);
-//		
-//		input = (TextField)s.lookup("#textfieldTrendEndYear");
-//		input.setText("");
-//		clickOn("#ButtonDoTrend");
-//		s1 = t.getText();
-//		s2 = "The end year of the period should not be blank.";
-//		if (s1.equals(s2))
-//			counter++;
-//		input.setText("2001");
+		
+		input = (TextField)s.lookup("#textfieldTrendEndYear");
+		input.setText("");
+		clickOn("#ButtonDoTrend");
+		s1 = t.getText();
+		s2 = "The end year of the period should not be blank.";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("2001");
 //		sleep(1000);
-//		
-//		input = (TextField)s.lookup("#textfieldTrendTopN");
-//		input.setText("");
-//		clickOn("#ButtonDoTrend");
-//		s1 = t.getText();
-//		s2 = "The TopN parameter should not be blank.";
-//		if (s1.equals(s2))
-//			counter++;
-//		input.setText("10");
+		
+		input = (TextField)s.lookup("#textfieldTrendTopN");
+		input.setText("");
+		clickOn("#ButtonDoTrend");
+		s1 = t.getText();
+		s2 = "The TopN parameter should not be blank.";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("10");
 //		sleep(1000);
-//		
-//		assertTrue(counter == 3);
-//	}
-//	
-//	@Test
-//	public void testReport3ANonIntegralInputValidation() {	
+		
+		assertTrue(counter == 3);
+	}
+	
+	@Test
+	public void testReport3ANonIntegralInputValidation() {	
+		sleep(1000);
+		clickOn("#tabReport3A");
+		TextField input;
+		String s1, s2;
+		int counter = 0;
+		
+		input = (TextField)s.lookup("#textfieldTrendStartYear");
+		input.setText("aaa");
+		clickOn("#ButtonDoTrend");
+		s1 = t.getText();
+		s2 = "The start year of the period should contain only integral numbers.";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("2000");
+		sleep(1000);
+		
+		input = (TextField)s.lookup("#textfieldTrendEndYear");
+		input.setText("aaa");
+		clickOn("#ButtonDoTrend");
+		s1 = t.getText();
+		s2 = "The end year of the period should contain only integral numbers.";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("2001");
+		sleep(1000);
+		
+		input = (TextField)s.lookup("#textfieldTrendTopN");
+		input.setText("aaa");
+		clickOn("#ButtonDoTrend");
+		s1 = t.getText();
+		s2 = "The TopN parameter should contain only integral numbers.";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("10");
+		sleep(1000);
+		
+		assertTrue(counter == 3);
+	}
+	
+	@Test
+	public void testReport3AZeroNumberInputValidation() {	
+		clickOn("#tabReport3A");
+		TextField input;
+		String s1, s2;
+		int counter = 0;
+		// topn, period
+		input = (TextField)s.lookup("#textfieldTrendStartYear");
+		input.setText("02000");
+		clickOn("#ButtonDoTrend");
+		s1 = t.getText();
+		s2 = "The start year should not start with zero(s).";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("2000");
 //		sleep(1000);
-//		clickOn("#tabReport3A");
-//		TextField input;
-//		String s1, s2;
-//		int counter = 0;
-//		
-//		input = (TextField)s.lookup("#textfieldTrendStartYear");
-//		input.setText("aaa");
-//		clickOn("#ButtonDoTrend");
-//		s1 = t.getText();
-//		s2 = "The start year of the period should contain only integral numbers.";
-//		if (s1.equals(s2))
-//			counter++;
-//		input.setText("2000");
+		
+		input = (TextField)s.lookup("#textfieldTrendEndYear");
+		input.setText("02001");
+		clickOn("#ButtonDoTrend");
+		s1 = t.getText();
+		s2 = "The end year should not start with zero(s).";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("2001");
 //		sleep(1000);
-//		
-//		input = (TextField)s.lookup("#textfieldTrendEndYear");
-//		input.setText("aaa");
-//		clickOn("#ButtonDoTrend");
-//		s1 = t.getText();
-//		s2 = "The end year of the period should contain only integral numbers.";
-//		if (s1.equals(s2))
-//			counter++;
-//		input.setText("2001");
+		
+		input = (TextField)s.lookup("#textfieldTrendTopN");
+		input.setText("010");
+		clickOn("#ButtonDoTrend");
+		s1 = t.getText();
+		s2 = "The TopN parameter should not start with zero(s).";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("10");
 //		sleep(1000);
-//		
-//		input = (TextField)s.lookup("#textfieldTrendTopN");
-//		input.setText("aaa");
-//		clickOn("#ButtonDoTrend");
-//		s1 = t.getText();
-//		s2 = "The TopN parameter should contain only integral numbers.";
-//		if (s1.equals(s2))
-//			counter++;
-//		input.setText("10");
+		
+		assertTrue(counter == 3);
+	}
+	
+	@Test
+	public void testReport3AInvalidRangeInputValidation() {	
+		clickOn("#tabReport3A");
+		TextField input;
+		String s1, s2;
+		int counter = 0;
+
+		input = (TextField)s.lookup("#textfieldTrendStartYear");
+		input.setText("1879");
+		clickOn("#ButtonDoTrend");
+		s1 = t.getText();
+		s2 = "The period should be in between 1880 to 2019 inclusively.";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("2000");
 //		sleep(1000);
-//		
-//		assertTrue(counter == 3);
-//	}
-//	
-//	@Test
-//	public void testReport3AZeroNumberInputValidation() {	
-//		clickOn("#tabReport3A");
-//		TextField input;
-//		String s1, s2;
-//		int counter = 0;
-//		// topn, period
-//		input = (TextField)s.lookup("#textfieldTrendStartYear");
-//		input.setText("02000");
-//		clickOn("#ButtonDoTrend");
-//		s1 = t.getText();
-//		s2 = "The start year should not start with zero(s).";
-//		if (s1.equals(s2))
-//			counter++;
-//		input.setText("2000");
+		
+		input = (TextField)s.lookup("#textfieldTrendEndYear");
+		input.setText("2020");
+		clickOn("#ButtonDoTrend");
+		s1 = t.getText();
+		s2 = "The period should be in between 1880 to 2019 inclusively.";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("2001");
 //		sleep(1000);
-//		
-//		input = (TextField)s.lookup("#textfieldTrendEndYear");
-//		input.setText("02001");
-//		clickOn("#ButtonDoTrend");
-//		s1 = t.getText();
-//		s2 = "The end year should not start with zero(s).";
-//		if (s1.equals(s2))
-//			counter++;
-//		input.setText("2001");
+		
+		input = (TextField)s.lookup("#textfieldTrendStartYear");
+		input.setText("2002");
+		clickOn("#ButtonDoTrend");
+		s1 = t.getText();
+		s2 = "The start year must smaller than the end year.";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("2000");
 //		sleep(1000);
-//		
-//		input = (TextField)s.lookup("#textfieldTrendTopN");
-//		input.setText("010");
-//		clickOn("#ButtonDoTrend");
-//		s1 = t.getText();
-//		s2 = "The TopN parameter should not start with zero(s).";
-//		if (s1.equals(s2))
-//			counter++;
-//		input.setText("10");
+		
+		input = (TextField)s.lookup("#textfieldTrendTopN");
+		input.setText("-1");
+		clickOn("#ButtonDoTrend");
+		s1 = t.getText();
+		s2 = "The TopN parameter should be larger than 0.";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("10");
 //		sleep(1000);
-//		
-//		assertTrue(counter == 3);
-//	}
+		
+		assertTrue(counter == 4);
+	}
+	
+	@Test
+	public void testApp6InputValidation() {	
+		clickOn("#tabApp3");
+		TextField input;
+		String s1, s2;
+		int counter = 0;
+		
+		input = (TextField)s.lookup("#textfieldCompatibleUserYOB");
+		input.setText("");
+		clickOn("#ButtonCalculateCompatibility");
+		s1 = t.getText();
+		s2 = "The year of birth should not be blank.";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("2000");
+//		sleep(1000);
+		
+		input = (TextField)s.lookup("#textfieldCompatibleUserYOB");
+		input.setText("aaa");
+		clickOn("#ButtonCalculateCompatibility");
+		s1 = t.getText();
+		s2 = "The year of birth should contain only integral numbers.";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("2000");
+//		sleep(1000);
+		
+		input = (TextField)s.lookup("#textfieldCompatibleUserYOB");
+		input.setText("02000");
+		clickOn("#ButtonCalculateCompatibility");
+		s1 = t.getText();
+		s2 = "The year of birth should not start with zero(s).";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("2000");
+//		sleep(1000);
+		
+		input = (TextField)s.lookup("#textfieldCompatibleUserYOB");
+		input.setText("2020");
+		clickOn("#ButtonCalculateCompatibility");
+		s1 = t.getText();
+		s2 = "Your year of birth should be in between 1880 to 2019 inclusively.";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("2000");
+//		sleep(1000);
+		
+		assertTrue(counter == 4);
+	}
 		
 }

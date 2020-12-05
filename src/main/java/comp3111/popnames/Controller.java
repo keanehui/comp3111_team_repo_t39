@@ -310,8 +310,12 @@ public class Controller {
     		textAreaConsole.setText("The period should be in between 1880 to 2019 inclusively.");	
     		return;
     	}
+    	if (istartYear >= iendYear){
+    		textAreaConsole.setText("The start year must smaller than the end year.");	
+    		return;
+    	}
     	if (topN <= 0) {
-    		textAreaConsole.setText("The TopN parameter should larger than 0.");	
+    		textAreaConsole.setText("The TopN parameter should be larger than 0.");	
     		return;
     	}
     	
@@ -343,7 +347,7 @@ public class Controller {
     void doShowCompatibilityScore() {
     	// Validation
     	if (textfieldCompatibleUserYOB.getText().trim().isEmpty()) {
-    		textAreaConsole.setText("The year of birth cannot be blank.");	
+    		textAreaConsole.setText("The year of birth should not be blank.");	
     		return;
     	}
     	try {

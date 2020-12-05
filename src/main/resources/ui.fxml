@@ -207,7 +207,7 @@
                                  </toggleGroup>
                               </RadioButton>
                               <RadioButton fx:id="radioButtonCompatibleOlderMatch" layoutX="600.0" layoutY="210.0" mnemonicParsing="false" text="Older" toggleGroup="$ToggleGroupCompatiblePreference" />
-                              <Button layoutX="66.0" layoutY="257.0" mnemonicParsing="false" onAction="#doShowCompatibilityScore" text="Show Compatibility Score" />
+                              <Button fx:id="ButtonCalculateCompatibility" layoutX="66.0" layoutY="257.0" mnemonicParsing="false" onAction="#doShowCompatibilityScore" text="Show Compatibility Score" />
                            </children>
                         </AnchorPane>
                     </content>
