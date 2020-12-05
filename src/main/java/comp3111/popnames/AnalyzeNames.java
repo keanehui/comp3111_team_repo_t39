@@ -160,9 +160,9 @@ public class AnalyzeNames {
 	 * Compute oYOB which equals to (iYOB+1) if (iPreference is Younger), or (iYOB-1) if (iPreference is Older)
 	 * Compute oRankMate which equals to the iGenderMate ranking of iNameMate in oYOB (equals to 1, if iNameMate is not ranked in oYOB)
 	 * If oRank is larger than oRankMate then
-	 * Compute oScore which equals to (1 - abs(oRank � oRankMate) / oRank) * 100%
+	 * Compute oScore which equals to (1 - abs(oRank -oRankMate) / oRank) * 100%
 	 * If oRankMate is larger than oRank then
-	 * Compute oScore which equals to (1 - abs(oRank � oRankMate) / oRankMate) * 100%
+	 * Compute oScore which equals to (1 - abs(oRank - oRankMate) / oRankMate) * 100%
 	 * In this way, the algorithm will provide a score of compatibility in range of 0%-100% (0%: Not Compatible; 100%: Perfect Match)
      *
      * @param String iName Name of the user
@@ -224,37 +224,6 @@ public class AnalyzeNames {
 		 return result;
 	 }
 	 
-
- 
-}
-
-/**
- * A helper class to store the rank properties for implementing getTrend functionality
- */
-class RankProperties {
-	public String name;
-	public int lowestRank;
-	public int lowestRankYear;
-	public int highestRank;
-	public int highestRankYear;
-	public String grossTrend;
-	
-	RankProperties(int lowestRank, int lowestRankYear, int highestRank, int highestRankYear, String grossTrend){
-		this.lowestRank = lowestRank;
-		this.lowestRankYear = lowestRankYear;
-		this.highestRank = highestRank;
-		this.highestRankYear = highestRankYear;
-		this.grossTrend = grossTrend;
-	}
-	
-	@Override
-	public boolean equals(Object o) {
-		RankProperties another = (RankProperties) o;
-		return lowestRank == another.lowestRank && lowestRankYear == another.lowestRankYear
-				&& highestRank == another.highestRank && highestRankYear == another.highestRankYear
-				&& grossTrend.equals(another.grossTrend);
-	}
-  
   	 /*
 	  * Task 2
 	  */
@@ -299,5 +268,37 @@ class RankProperties {
 		 String oName = getName(oYOB, oRank, Gender_soulmate);
 		 return oName;
 	 }
+
+ 
+}
+
+/**
+ * A helper class to store the rank properties for implementing getTrend functionality
+ */
+class RankProperties {
+	public String name;
+	public int lowestRank;
+	public int lowestRankYear;
+	public int highestRank;
+	public int highestRankYear;
+	public String grossTrend;
+	
+	RankProperties(int lowestRank, int lowestRankYear, int highestRank, int highestRankYear, String grossTrend){
+		this.lowestRank = lowestRank;
+		this.lowestRankYear = lowestRankYear;
+		this.highestRank = highestRank;
+		this.highestRankYear = highestRankYear;
+		this.grossTrend = grossTrend;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		RankProperties another = (RankProperties) o;
+		return lowestRank == another.lowestRank && lowestRankYear == another.lowestRankYear
+				&& highestRank == another.highestRank && highestRankYear == another.highestRankYear
+				&& grossTrend.equals(another.grossTrend);
+	}
+  
+
 }
 
