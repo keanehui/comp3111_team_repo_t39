@@ -251,6 +251,13 @@ public class AnalyzeNames {
   	 /*
 	  * Task 2
 	  */
+	 /**
+	  * This is a helper function to get the counting number of a name in a specific year.
+	  * @param year The year that the number of name used 
+	  * @param name	The name you want to search
+	  * @param gender The gender of the name
+	  * @return the number of frequency of a name using
+	  */
 	 public static int getcount(int year, String name, String gender) {
 		 boolean found = false;
 		 int count = 0;
@@ -273,6 +280,11 @@ public class AnalyzeNames {
 	     	return -1;
 	 }
 	 
+	 /**
+	  * 
+	  * @param year The year that the total number of baby year you want to know
+	  * @return The total number of baby in that year
+	  */
 	 public static int getbabynumber(int year) {
 		 int totalBirths = 0;
 	     for (CSVRecord rec : getFileParser(year)) {
@@ -285,7 +297,15 @@ public class AnalyzeNames {
 	 /*
 	  * Task5
 	  */
-	 
+	 /**
+	  * 
+	  * @param Name  The user name
+	  * @param Gender The gender of the user
+	  * @param YOB	The year of birth of the user
+	  * @param Gender_soulmate The gender of the soulmate you want to find	
+	  * @param Preference	The preference that you want a older soulmate or younger soulmate
+	  * @return The recommended name of the soulmate
+	  */
 	 public static String NK_T5algorithm(String Name,String Gender,int YOB,String Gender_soulmate,String Preference) {
 		 int oRank = (getRank(YOB,Name,Gender)==-1)? 1:getRank(YOB,Name,Gender);
 		 int oYOB = (Preference == "O")? YOB-1:YOB+1;
