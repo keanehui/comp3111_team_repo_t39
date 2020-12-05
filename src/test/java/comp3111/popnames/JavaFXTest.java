@@ -33,7 +33,7 @@ public class JavaFXTest extends ApplicationTest {
     
 	@Test
 	public void testButtonRankTrue() {	
-		//clickOn("#tabTaskZero");
+		clickOn("#tabTaskZero");
 		clickOn("#buttonRankM");
 		//sleep(1000);
 		String s1 = t.getText();
@@ -46,7 +46,7 @@ public class JavaFXTest extends ApplicationTest {
 	
 	@Test
 	public void testButtonRankFalse() {	
-		//clickOn("#tabTaskZero");
+		clickOn("#tabTaskZero");
 		clickOn("#buttonRankM");
 		//sleep(1000);
 		String s1 = t.getText();
@@ -62,6 +62,123 @@ public class JavaFXTest extends ApplicationTest {
 		t.setText("David");
 		String s = t.getText();
 		assertTrue(s.equals("David"));
+	}
+	
+	@Test
+	public void testReport3ABlankInputValidation() {	
+		clickOn("#tabReport3A");
+		TextField input;
+		String s1, s2;
+		int counter = 0;
+		
+		input = (TextField)s.lookup("#textfieldTrendStartYear");
+		input.setText("");
+		clickOn("#ButtonDoTrend");
+		s1 = t.getText();
+		s2 = "The start year of the period should be blank.";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("2000");
+		sleep(1000);
+		
+		input = (TextField)s.lookup("#textfieldTrendEndYear");
+		input.setText("");
+		clickOn("#ButtonDoTrend");
+		s1 = t.getText();
+		s2 = "The end year of the period should be blank.";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("2001");
+		sleep(1000);
+		
+		input = (TextField)s.lookup("#textfieldTrendTopN");
+		input.setText("");
+		clickOn("#ButtonDoTrend");
+		s1 = t.getText();
+		s2 = "The TopN parameter should be blank.";
+		if (s1.equals(s2))
+			counter++;
+		sleep(1000);
+		
+		assertTrue(counter == 3);
+	}
+	
+	@Test
+	public void testReport3ANonIntegralInputValidation() {	
+		clickOn("#tabReport3A");
+		TextField input;
+		String s1, s2;
+		int counter = 0;
+		
+		input = (TextField)s.lookup("#textfieldTrendStartYear");
+		input.setText("aaa");
+		clickOn("#ButtonDoTrend");
+		s1 = t.getText();
+		s2 = "The start year of the period should contain only integral numbers.";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("2000");
+		sleep(1000);
+		
+		input = (TextField)s.lookup("#textfieldTrendEndYear");
+		input.setText("aaa");
+		clickOn("#ButtonDoTrend");
+		s1 = t.getText();
+		s2 = "The end year of the period should contain only integral numbers.";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("2001");
+		sleep(1000);
+		
+		input = (TextField)s.lookup("#textfieldTrendTopN");
+		input.setText("aaa");
+		clickOn("#ButtonDoTrend");
+		s1 = t.getText();
+		s2 = "The TopN parameter should contain only integral numbers.";
+		if (s1.equals(s2))
+			counter++;
+		sleep(1000);
+		
+		assertTrue(counter == 3);
+	}
+	
+	@Test
+	public void testReport3AZeroNumberInputValidation() {	
+		clickOn("#tabReport3A");
+		TextField input;
+		String s1, s2;
+		int counter = 0;
+		// topn, period
+		input = (TextField)s.lookup("#textfieldTrendStartYear");
+		input.setText("aaa");
+		clickOn("#ButtonDoTrend");
+		s1 = t.getText();
+		s2 = "The start year of the period should contain only integral numbers.";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("2000");
+		sleep(1000);
+		
+		input = (TextField)s.lookup("#textfieldTrendEndYear");
+		input.setText("aaa");
+		clickOn("#ButtonDoTrend");
+		s1 = t.getText();
+		s2 = "The end year of the period should contain only integral numbers.";
+		if (s1.equals(s2))
+			counter++;
+		input.setText("2001");
+		sleep(1000);
+		
+		input = (TextField)s.lookup("#textfieldTrendTopN");
+		input.setText("aaa");
+		clickOn("#ButtonDoTrend");
+		s1 = t.getText();
+		s2 = "The TopN parameter should contain only integral numbers.";
+		if (s1.equals(s2))
+			counter++;
+		sleep(1000);
+		
+		assertTrue(counter == 3);
 	}
 		
 }
