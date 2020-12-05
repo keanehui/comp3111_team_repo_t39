@@ -113,6 +113,24 @@ public class AnalyzeNamesTest {
     	else
     		assertTrue(false);
     }
+	
+	// Task 2
+	
+    @Test 
+    public void testGetcountwithyear() {
+    	AnalyzeNames a = new AnalyzeNames();
+    	int count = a.getcount(1880,"David", "M");
+    	assertTrue(count == 869);
+    
+    }
+    
+//    @Test 
+//    public void testGetbwithyear() {
+//    	AnalyzeNames a = new AnalyzeNames();
+//    	int count = a.getcount(1880,"David", "M");
+//    	assertTrue(count == 869);
+//    
+//    }
 
 
 }
