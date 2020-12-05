@@ -71,23 +71,19 @@
                                  <children>
                                     <TextArea layoutX="109.0" layoutY="33.0" prefHeight="42.0" prefWidth="335.0" text="Generate a brief report in response to the queries on the popularity of a particular name over a given period." wrapText="true" />
                                     <Label layoutX="109.0" layoutY="93.0" text="Name" />
-                                    <TextField layoutX="159.0" layoutY="88.0" prefHeight="26.0" prefWidth="88.0" text="David" />
+                                    <TextField fx:id="textfieldNamereport2" layoutX="159.0" layoutY="88.0" prefHeight="26.0" prefWidth="88.0" text="David" />
                                     <Label layoutX="277.0" layoutY="93.0" text="Gender: " />
                                     <RadioButton layoutX="332.0" layoutY="93.0" mnemonicParsing="false" selected="true" text="Male">
                                        <toggleGroup>
                                           <ToggleGroup fx:id="T11" />
                                        </toggleGroup>
                                     </RadioButton>
-                                    <RadioButton layoutX="384.0" layoutY="93.0" mnemonicParsing="false" text="Female">
-                                       <toggleGroup>
-                                          <ToggleGroup fx:id="T11" />
-                                       </toggleGroup>
-                                    </RadioButton>
+                                    <RadioButton layoutX="384.0" layoutY="93.0" mnemonicParsing="false" text="Female" toggleGroup="$T11" />
                                     <Label layoutX="109.0" layoutY="129.0" text="Period (1880 - 2019): " />
-                                    <TextField layoutX="289.0" layoutY="123.0" prefHeight="26.0" prefWidth="43.0" text="1945" />
-                                    <TextField layoutX="223.0" layoutY="123.0" prefHeight="26.0" prefWidth="43.0" text="1941" />
+                                    <TextField fx:id="textfieldlastyear_report2" layoutX="289.0" layoutY="123.0" prefHeight="26.0" prefWidth="43.0" text="1945" />
+                                    <TextField fx:id="textfieldfirstyear_report2" layoutX="223.0" layoutY="123.0" prefHeight="26.0" prefWidth="43.0" text="1941" />
                                     <Label layoutX="271.0" layoutY="127.0" text="to" />
-                                    <Button layoutX="108.0" layoutY="169.0" mnemonicParsing="false" text="REPORT (yet to be implemented)" />
+                                    <Button fx:id="report2" layoutX="108.0" layoutY="169.0" mnemonicParsing="false" onAction="#reporting2" text="REPORT" />
                                  </children>
                               </AnchorPane>
                            </children>
@@ -148,7 +144,33 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TextArea layoutX="40.0" layoutY="27.0" prefHeight="242.0" prefWidth="638.0" text="Develop and implement an online service using empirical data to help make informed decisions on predicting names for compatible pairs.  Sample Scenario of Application: (i) A person seeking advices on identifying the name of a person of a different gender who would become his/her soulmate; (ii) A person seeking advices on identifying the name of a person of the same gender who would become his/her soulmate.&#10;&#10;Input&#10;* iName, iGender, iYOB: Particulars of the person seeking advices&#10;* iGenderMate: Specify the gender of the soulmate to be matched&#10;* iPreference: Specify the preference on having a younger or older soulmate&#10;&#10;Output&#10;* oName: Recommended name of the soulmate according to the NK-T5 Algorithm&#10;* plus, WOW factor on user experience and algorithm design!" wrapText="true" />
+                              <TextArea layoutX="40.0" layoutY="27.0" prefHeight="120.0" prefWidth="638.0" text="Develop and implement an online service using empirical data to help make informed decisions on predicting names for compatible pairs.  Sample Scenario of Application: (i) A person seeking advices on identifying the name of a person of a different gender who would become his/her soulmate; (ii) A person seeking advices on identifying the name of a person of the same gender who would become his/her soulmate.&#10;&#10;Input&#10;* iName, iGender, iYOB: Particulars of the person seeking advices&#10;* iGenderMate: Specify the gender of the soulmate to be matched&#10;* iPreference: Specify the preference on having a younger or older soulmate&#10;&#10;Output&#10;* oName: Recommended name of the soulmate according to the NK-T5 Algorithm&#10;* plus, WOW factor on user experience and algorithm design!" wrapText="true" />
+							  <RadioButton layoutX="230.0" layoutY="214.0" mnemonicParsing="false" text="Female">
+								 <toggleGroup>
+								    <ToggleGroup fx:id="T51" />
+								 </toggleGroup>
+							  </RadioButton>
+							  <RadioButton layoutX="170.0" layoutY="214.0" mnemonicParsing="false" selected="true" text="Male" toggleGroup="$T51" />
+							  <Label layoutX="112.0" layoutY="174.0" text="Name : " />
+							  <TextField fx:id="textfieldname_app2" layoutX="160.0" layoutY="170.0" prefHeight="26.0" prefWidth="100.0" text="David" />
+							  <Label layoutX="112.0" layoutY="214.0" text="Gender : " />
+							  <Label layoutX="112.0" layoutY="248.0" text="Year of Birth : " />
+							  <TextField fx:id="textfieldyear_app2" layoutX="200.0" layoutY="242.0" prefHeight="26.0" prefWidth="43.0" text="1941" />
+							  <Label layoutX="350.0" layoutY="214.0" text="Gender of the soulmate : " />
+							  <RadioButton layoutX="570.0" layoutY="215.0" mnemonicParsing="false" text="Female">
+								 <toggleGroup>
+								    <ToggleGroup fx:id="T52" />
+								 </toggleGroup>
+							  </RadioButton>
+							  <RadioButton layoutX="510.0" layoutY="215.0" mnemonicParsing="false" selected="true" text="Male" toggleGroup="$T52" />
+							  <Label layoutX="350.0" layoutY="250.0" text="Preference : " />
+							  <RadioButton layoutX="500.0" layoutY="250.0" mnemonicParsing="false" text="Younger">
+								 <toggleGroup>
+								    <ToggleGroup fx:id="T53" />
+								 </toggleGroup>
+							  </RadioButton>
+							  <RadioButton layoutX="430.0" layoutY="250.0" mnemonicParsing="false" selected="true" text="Older" toggleGroup="$T53" />
+							  <Button fx:id="report5" layoutX="350.0" layoutY="285.0" mnemonicParsing="false" onAction="#reporting5" text="REPORT" />                           
                            </children>
                         </AnchorPane>
                     </content>
