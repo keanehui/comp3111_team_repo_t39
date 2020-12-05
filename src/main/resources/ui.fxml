@@ -90,7 +90,7 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                  <Tab fx:id="tabReport3" text="Reporting 3">
+                  <Tab fx:id="tabReport3A" text="Reporting 3A">
                     <content>
                         <AnchorPane>
                            <children>
@@ -112,7 +112,7 @@
                                     <Label layoutX="350.0" layoutY="138.0" text="Top N (N&gt;=1): " />
                                     <TextField fx:id="textfieldTrendTopN" layoutX="430.0" layoutY="132.0" prefHeight="26.0" prefWidth="27.0" text="10" />
 
-                                    <Button layoutX="112.0" layoutY="175.0" mnemonicParsing="false" onAction="#doTrend" text="REPORT" />
+                                    <Button fx:id="ButtonDoTrend" layoutX="112.0" layoutY="175.0" mnemonicParsing="false" onAction="#doTrend" text="REPORT" />
                                  </children>
                               </AnchorPane>
                            </children>

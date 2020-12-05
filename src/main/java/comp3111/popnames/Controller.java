@@ -251,7 +251,7 @@ public class Controller {
     }
     
 
-    /*
+    /**
      *  Task 3A
      *  To be triggered by the "Report" button on the Report3 Tab
      *  
@@ -260,15 +260,15 @@ public class Controller {
     void doTrend() {
     	// Validation
     	if (textfieldTrendStartYear.getText().trim().isEmpty()) {
-    		textAreaConsole.setText("The start year of the period cannot be blank.");	
+    		textAreaConsole.setText("The start year of the period should not be blank.");	
     		return;
     	}
     	if (textfieldTrendEndYear.getText().trim().isEmpty()) {
-    		textAreaConsole.setText("The end year of the period cannot be blank.");	
+    		textAreaConsole.setText("The end year of the period should not be blank.");	
     		return;
     	}
     	if (textfieldTrendTopN.getText().trim().isEmpty()) {
-    		textAreaConsole.setText("The TopN parameter cannot be blank.");	
+    		textAreaConsole.setText("The TopN parameter should not be blank.");	
     		return;
     	}
     	try {
