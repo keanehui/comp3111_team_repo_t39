@@ -522,5 +522,105 @@ public class JavaFXTest extends ApplicationTest {
 		String s2 = t.getText();
 		assertTrue(s1.equals(s2));
 	}
-		
+	
+	// test 2
+	@Test
+	public void testReport2_1() {	
+		tf = (TextField)s.lookup("#textfieldNamereport2");
+		clickOn("#tabReport2");
+		tf.setText("-1");
+		clickOn("#report2");
+		//sleep(1000);
+		String s1 = t.getText();
+		clickOn("#report2");
+		//sleep(1000);
+		String s2 = t.getText();
+		assertTrue(s1.equals(s2));
+	}
+	@Test
+	public void testReport2_2() {	
+		tf = (TextField)s.lookup("#textfieldNamereport2");
+		clickOn("#tabReport2");
+		tf.setText("Mary");
+		clickOn("#report2");
+		//sleep(1000);
+		String s1 = t.getText();
+		clickOn("#report2");
+		//sleep(1000);
+		String s2 = t.getText();
+		assertTrue(s1.equals(s2));
+	}
+	@Test
+	public void testReport2_3() {	
+		tf = (TextField)s.lookup("#textfieldNamereport2");
+		clickOn("#tabReport2");
+		tf.setText("");
+		clickOn("#report2");
+		//sleep(1000);
+		String s1 = t.getText();
+		clickOn("#report2");
+		//sleep(1000);
+		String s2 = t.getText();
+		assertTrue(s1.equals(s2));
+	}
+	@Test
+	public void testReport2_4() {	
+		tf = (TextField)s.lookup("#textfieldlastyear_report2");
+		clickOn("#tabReport2");
+		tf.setText("1.1");
+		clickOn("#report2");
+		//sleep(1000);
+		String s1 = t.getText();
+		clickOn("#report2");
+		//sleep(1000);
+		String s2 = t.getText();
+		assertTrue(s1.equals(s2));
+	}
+	@Test
+	public void testReport2_5() {	
+		tf = (TextField)s.lookup("#textfieldlastyear_report2");
+		clickOn("#tabReport2");
+		tf.setText("100");
+		clickOn("#report2");
+		//sleep(1000);
+		String s1 = t.getText();
+		clickOn("#report2");
+		//sleep(1000);
+		String s2 = t.getText();
+		assertTrue(s1.equals(s2));
+	}
+	
+	// test 5
+	@Test
+	public void testapp2_1() {	
+		tf = (TextField)s.lookup("#textfieldyear_app2");
+		clickOn("#tabApp2");
+		tf.setText("1.1");
+		clickOn("#report5");
+		//sleep(1000);
+		String s1 = t.getText();
+		clickOn("#report5");
+		//sleep(1000);
+		String s2 = t.getText();
+		assertTrue(s1.equals(s2));
+	}
+	@Test
+	public void testapp2_2() {	
+		tf = (TextField)s.lookup("#textfieldyear_app2");
+		clickOn("#tabApp2");
+		tf.setText("1946");
+		clickOn("#report5");
+		//sleep(1000);
+		String s1 = t.getText();
+		clickOn("#report5");
+		//sleep(1000);
+		String s2 = t.getText();
+		assertTrue(s1.equals(s2));
+	}
+	
+	
+	
+	
+	
+	
 }
