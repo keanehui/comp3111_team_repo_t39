@@ -265,7 +265,7 @@ public class Controller {
        			return;
        		}
        	 }
-    	 if (dadYOB < 1880 || mumYOB > 2019) {
+    	 if (dadYOB < 1880 || dadYOB > 2019 || mumYOB < 1880 || mumYOB > 2019) {
     		 textAreaConsole.setText("Year of birth must be within period from 1880 to 2019. \n");
     		 return;
     	 }
