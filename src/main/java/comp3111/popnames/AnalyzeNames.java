@@ -1,3 +1,4 @@
+
 package comp3111.popnames;
 
 import java.util.ArrayList;
@@ -159,9 +160,9 @@ public class AnalyzeNames {
 	 * Compute oYOB which equals to (iYOB+1) if (iPreference is Younger), or (iYOB-1) if (iPreference is Older)
 	 * Compute oRankMate which equals to the iGenderMate ranking of iNameMate in oYOB (equals to 1, if iNameMate is not ranked in oYOB)
 	 * If oRank is larger than oRankMate then
-	 * Compute oScore which equals to (1 - abs(oRank � oRankMate) / oRank) * 100%
+	 * Compute oScore which equals to (1 - abs(oRank -oRankMate) / oRank) * 100%
 	 * If oRankMate is larger than oRank then
-	 * Compute oScore which equals to (1 - abs(oRank � oRankMate) / oRankMate) * 100%
+	 * Compute oScore which equals to (1 - abs(oRank - oRankMate) / oRankMate) * 100%
 	 * In this way, the algorithm will provide a score of compatibility in range of 0%-100% (0%: Not Compatible; 100%: Perfect Match)
      *
      * @param String iName Name of the user
@@ -223,6 +224,50 @@ public class AnalyzeNames {
 		 return result;
 	 }
 	 
+  	 /*
+	  * Task 2
+	  */
+	 public static int getcount(int year, String name, String gender) {
+		 boolean found = false;
+		 int count = 0;
+		 int rank = 1;
+	     for (CSVRecord rec : getFileParser(year)) {
+	         // Increment rank if gender matches param
+	         if (rec.get(1).equals(gender)) {
+	             // Return count if name matches param
+	             if (rec.get(0).equals(name)) {
+	             	found = true;
+	             	count = Integer.parseInt(rec.get(2));
+	             	break;
+	             }
+	             rank++;
+	         }
+	     }
+	     if (found)
+	     	return count;
+	     else
+	     	return -1;
+	 }
+	 
+	 public static int getbabynumber(int year) {
+		 int totalBirths = 0;
+	     for (CSVRecord rec : getFileParser(year)) {
+	    	 int numBorn = Integer.parseInt(rec.get(2));
+				totalBirths += numBorn;
+	     }
+	     	return totalBirths;
+	 }
+	 
+	 /*
+	  * Task5
+	  */
+	 
+	 public static String NK_T5algorithm(String Name,String Gender,int YOB,String Gender_soulmate,String Preference) {
+		 int oRank = (getRank(YOB,Name,Gender)==-1)? 1:getRank(YOB,Name,Gender);
+		 int oYOB = (Preference == "O")? YOB-1:YOB+1;
+		 String oName = getName(oYOB, oRank, Gender_soulmate);
+		 return oName;
+	 }
 
  
 }
@@ -253,4 +298,7 @@ class RankProperties {
 				&& highestRank == another.highestRank && highestRankYear == another.highestRankYear
 				&& grossTrend.equals(another.grossTrend);
 	}
+  
+
 }
+
