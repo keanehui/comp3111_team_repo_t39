@@ -1,4 +1,3 @@
-
 package comp3111.popnames;
 
 import java.util.ArrayList;
@@ -55,6 +54,13 @@ public class AnalyzeNames {
 	}
 	
 	
+	 /**
+	  *
+	  * @param year The year we want to find the rank of the name from
+	  * @param name The name we want to find the rank of
+	  * @param gender The gender of the name we want to find the rank of
+	  * @return rank If the name is found in the given year
+	  */
 	 public static int getRank(int year, String name, String gender) {
 	     boolean found = false;
 	     int oRank = 0;
@@ -78,6 +84,13 @@ public class AnalyzeNames {
 	 }
 	 
  
+	 /**
+	  * 
+	  * @param year The year we want to find the name based on the given rank from. 
+	  * @param rank The rank we use to find the name in the given year.
+	  * @param gender The gender of the name we want to find based on the given rank.
+	  * @return Name If the rank with gender is valid in the year.
+	  */
 	 public static String getName(int year, int rank, String gender) {
 	 	boolean found = false;
 	     String oName = "";
@@ -192,6 +205,11 @@ public class AnalyzeNames {
 	 }
 
 	 // task 1
+	 /**
+	  * 
+	  * @param hashmap HashMap where each entry contains Name and its frequency 
+	  * @return name The name with the maximum frequency in the HashMap
+	  */
 	 public static String getMaxFromHashMap(HashMap<String, Integer> hashmap) { 
 		 String result = "";
 		 Integer currentMaxFreq = -1;
@@ -204,6 +222,14 @@ public class AnalyzeNames {
 		 return result;
 	 }
 	 
+	 /**
+	  * 
+	  * @param topN Number of result. 
+	  * @param fromYear The starting year we are interested in. 
+	  * @param toYear The ending year we are interested in to find the top names. 
+	  * @param gender The gender of the names we are interested in. 
+	  * @return HashMap with entries containing top names and their frequencies
+	  */
 	 public static HashMap<String, Integer> getTopNNameWithInYears(int topN, int fromYear, int toYear, String gender) {
 		 HashMap<String, Integer> result = new HashMap<String, Integer>();
 		 HashMap<String, Integer> name_freq = new HashMap<String, Integer>();
@@ -301,4 +327,3 @@ class RankProperties {
   
 
 }
-

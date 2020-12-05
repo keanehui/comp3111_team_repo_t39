@@ -3,7 +3,11 @@ package comp3111.popnames;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+
+import java.util.HashMap;
+
 import java.util.LinkedHashMap;
+
 
 public class AnalyzeNamesTest {
 	
@@ -42,6 +46,28 @@ public class AnalyzeNamesTest {
     	assertTrue(name.equals("Desire"));
     }
     
+
+    @Test
+    public void testGetTopNNameWithInYears1() { 
+    	AnalyzeNames a = new AnalyzeNames();
+    	HashMap<String, Integer> name_freq = a.getTopNNameWithInYears(1, 1880, 1880, "M");
+    	assertTrue(name_freq.size() == 1);
+    }
+    
+    @Test
+    public void testGetTopNNameWithInYears2() { 
+    	AnalyzeNames a = new AnalyzeNames();
+    	HashMap<String, Integer> name_freq = a.getTopNNameWithInYears(20, 1880, 1880, "M");
+    	assertTrue(name_freq.size() == 20);
+    }
+    
+    @Test
+    public void testGetTopNNameWithInYears3() { 
+    	AnalyzeNames a = new AnalyzeNames();
+    	HashMap<String, Integer> name_freq = a.getTopNNameWithInYears(10, 1880, 2019, "F");
+    	assertTrue(name_freq.size() == 10);
+    }
+    
     @Test 
     public void testGetTrend() {
     	AnalyzeNames a = new AnalyzeNames();
@@ -66,5 +92,6 @@ public class AnalyzeNamesTest {
     	else
     		assertTrue(false);
     }
+
 
 }
