@@ -5,6 +5,7 @@
 package comp3111.popnames;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -320,7 +321,18 @@ public class Controller {
     	}
     	
     	// Call the calculation method
-    	var oReport = AnalyzeNames.getTrend(istartYear, iendYear, igender, topN);
+    	LinkedHashMap<String, RankProperties> oReport;
+    	try {
+    		oReport = AnalyzeNames.getTrend(istartYear, iendYear, igender, topN);
+    	} catch (Exception e) {
+    		textAreaConsole.setText(e.getMessage());	
+    		return;
+    	}
+    	
+    	if (oReport.isEmpty()) {
+    		textAreaConsole.setText("No record is found.");	
+    		return;
+    	}
     	
     	// Print out the output
     	String[] header = {"Name", "Lowest Rank", "Highest Rank", "Gross Trend"};

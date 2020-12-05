@@ -103,8 +103,8 @@ public class AnalyzeNames {
 	 }
 	 
 
-	 /*
-     * Identify the names that have maintained a high level of popularity within Top N over a given period.
+	 /**
+     * Task 3A: Identify the names that have maintained a high level of popularity within Top N over a given period.
      *
      * @param int istartYear the start year of the period
      * @param int iendYear the end year of the period
@@ -116,6 +116,8 @@ public class AnalyzeNames {
 		 var result = new LinkedHashMap<String, RankProperties>();
 	 	 for (int i = istartYear, j = 1; j <= topN; j++) {
  			var currentName = getName(i, j, igender);
+	 		if (currentName.equals("information on the name at the specified rank is not available"))
+	 			throw new IllegalArgumentException("The TopN parameter is too large.");
  			result.put(currentName, new RankProperties(j, i, j, i, "FLAT"));
  		 }
 
@@ -154,7 +156,7 @@ public class AnalyzeNames {
 	 }
 	 
 	 /**
-     * Calculate Scores for Compatible Pairs
+     * Task 6: Calculate Scores for Compatible Pairs
      * The algorithm is described as follows.
      * Compute oRank which equals to the iGender ranking of iName in iYOB (equals to 1, if iName is not ranked in iYOB)
 	 * Compute oYOB which equals to (iYOB+1) if (iPreference is Younger), or (iYOB-1) if (iPreference is Older)
@@ -182,10 +184,6 @@ public class AnalyzeNames {
 		 int oRankMate = getRank(oYOB, iNameMate, iGenderMate);
 		 oRankMate = oRankMate == -1 ? 1 : oRankMate;
 
-		 System.out.println(oRankMate);
-		 System.out.println(oRank);
-		 System.out.println(oYOB);
-		 
 		 if (oRank > oRankMate)
 			 return ((1 - Math.abs(oRank - oRankMate) / (float)oRank) * 100);
 		 return ((1 - Math.abs(oRank - oRankMate) / (float)oRankMate) * 100);
@@ -273,7 +271,7 @@ public class AnalyzeNames {
 }
 
 /**
- * A helper class to store the rank properties for implementing getTrend functionality
+ * A helper class to store the rank properties for implementing task3A (getTrend) functionality
  */
 class RankProperties {
 	public String name;

@@ -43,7 +43,7 @@ public class AnalyzeNamesTest {
     }
     
     @Test 
-    public void testGetTrend() {
+    public void testGetTrendValid() {
     	AnalyzeNames a = new AnalyzeNames();
     	var testResult = a.getTrend(2010, 2019, "M", 10);
     	LinkedHashMap<String, RankProperties> actualResult = new LinkedHashMap<>();
@@ -55,12 +55,33 @@ public class AnalyzeNamesTest {
     	}
     	assertTrue(true);
     }
+    
+    @Test 
+    public void testGetTrendwithInvalidTopN() {
+    	AnalyzeNames a = new AnalyzeNames();
+    	try {
+    		a.getTrend(1880, 2019, "M", 99999999);
+    	} catch (Exception e) {
+    		assertTrue(e.getMessage().equals("The TopN parameter is too large."));
+    	}
+    }
 	
 	@Test 
-    public void testCalculateCompatiblityScore() {
+    public void testCalculateCompatiblityScoreGeneralCase() {
 		AnalyzeNames a = new AnalyzeNames();
     	var testResult = a.calculateCompatiblityScore("Elai", "M", 2018, "Kazi", "F", "Younger");
     	double actualResult = 66.34;
+    	if (String.format("%.2f", testResult).equals(String.format("%.2f", actualResult)))
+			assertTrue(true);
+    	else
+    		assertTrue(false);
+    }
+	
+	@Test 
+    public void testCalculateCompatiblityScoreBoundaryCase() {
+		AnalyzeNames a = new AnalyzeNames();
+    	var testResult = a.calculateCompatiblityScore("Abc", "M", 2018, "Def", "F", "Younger");
+    	double actualResult = 100.00;
     	if (String.format("%.2f", testResult).equals(String.format("%.2f", actualResult)))
 			assertTrue(true);
     	else
