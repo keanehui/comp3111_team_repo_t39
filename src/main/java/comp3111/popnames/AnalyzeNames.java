@@ -2,6 +2,8 @@ package comp3111.popnames;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -99,6 +101,7 @@ public class AnalyzeNames {
 	     	return "information on the name at the specified rank is not available";
 	 }
 	 
+
 	 /*
      * Identify the names that have maintained a high level of popularity within Top N over a given period.
      *
@@ -156,9 +159,9 @@ public class AnalyzeNames {
 	 * Compute oYOB which equals to (iYOB+1) if (iPreference is Younger), or (iYOB-1) if (iPreference is Older)
 	 * Compute oRankMate which equals to the iGenderMate ranking of iNameMate in oYOB (equals to 1, if iNameMate is not ranked in oYOB)
 	 * If oRank is larger than oRankMate then
-	 * Compute oScore which equals to (1 - abs(oRank – oRankMate) / oRank) * 100%
+	 * Compute oScore which equals to (1 - abs(oRank ï¿½ oRankMate) / oRank) * 100%
 	 * If oRankMate is larger than oRank then
-	 * Compute oScore which equals to (1 - abs(oRank – oRankMate) / oRankMate) * 100%
+	 * Compute oScore which equals to (1 - abs(oRank ï¿½ oRankMate) / oRankMate) * 100%
 	 * In this way, the algorithm will provide a score of compatibility in range of 0%-100% (0%: Not Compatible; 100%: Perfect Match)
      *
      * @param String iName Name of the user
@@ -186,6 +189,41 @@ public class AnalyzeNames {
 			 return ((1 - Math.abs(oRank - oRankMate) / (float)oRank) * 100);
 		 return ((1 - Math.abs(oRank - oRankMate) / (float)oRankMate) * 100);
 	 }
+
+	 // task 1
+	 public static String getMaxFromHashMap(HashMap<String, Integer> hashmap) { 
+		 String result = "";
+		 Integer currentMaxFreq = -1;
+		 for (Map.Entry<String, Integer> entry : hashmap.entrySet()) {
+			 if (entry.getValue() > currentMaxFreq) {
+				 currentMaxFreq = entry.getValue();
+				 result = entry.getKey();
+			 }
+		 }
+		 return result;
+	 }
+	 
+	 public static HashMap<String, Integer> getTopNNameWithInYears(int topN, int fromYear, int toYear, String gender) {
+		 HashMap<String, Integer> result = new HashMap<String, Integer>();
+		 HashMap<String, Integer> name_freq = new HashMap<String, Integer>();
+		 for (int year = fromYear; year <= toYear; ++year) { // put all valid entries in map
+			 for (CSVRecord rec : getFileParser(year)) {
+		         if (rec.get(1).equals(gender)) {
+		        	 name_freq.put(rec.get(0), Integer.parseInt(rec.get(2)));
+		         }
+		     }
+		 }
+		 String currentName = "";
+		 for (int i = 0; i < topN; ++i) { // get max name, add to result, remove it, do 5 times
+			 currentName = getMaxFromHashMap(name_freq);
+			 result.put(currentName, name_freq.get(currentName));
+			 name_freq.remove(currentName);
+		 }
+		 
+		 return result;
+	 }
+	 
+
  
 }
 
