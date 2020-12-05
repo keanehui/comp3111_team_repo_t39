@@ -5,6 +5,7 @@
 package comp3111.popnames;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -506,7 +507,7 @@ public class Controller {
     	 
     	 textAreaConsole.setText(String.format("Boy's Name: %s\nGirl's Name: %s", boyName, girlName)); 
      }
-}
+
   
       /**
      *  Task 2
