@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AnalyzeNames.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PopNames3111</a> &gt; <a href="index.source.html" class="el_package">comp3111.popnames</a> &gt; <span class="el_source">AnalyzeNames.java</span></div><h1>AnalyzeNames.java</h1><pre class="source lang-java linenums">package comp3111.popnames;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.csv.*;
+import edu.duke.*;
+
+<span class="fc" id="L13">public class AnalyzeNames {</span>
+
+	public static CSVParser getFileParser(int year) {
+<span class="fc" id="L16">     FileResource fr = new FileResource(String.format(&quot;dataset/yob%s.csv&quot;, year));</span>
+<span class="fc" id="L17">     return fr.getCSVParser(false);</span>
+	}
+ 
+	
+	public static String getSummary(int year) {
+<span class="nc" id="L22">		String oReport = &quot;&quot;;	</span>
+<span class="nc" id="L23">		int totalBirths = 0;</span>
+<span class="nc" id="L24">		int totalBoys = 0;</span>
+<span class="nc" id="L25">		int totalGirls = 0;</span>
+<span class="nc" id="L26">		int totalNames = 0;</span>
+<span class="nc" id="L27">		int uniqueBoys = 0;</span>
+<span class="nc" id="L28">		int uniqueGirls = 0;</span>
+		
+<span class="nc" id="L30">		oReport = String.format(&quot;Summary (Year of %d):\n&quot;, year);</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">		for (CSVRecord rec : getFileParser(year)) {</span>
+<span class="nc" id="L32">			int numBorn = Integer.parseInt(rec.get(2));</span>
+<span class="nc" id="L33">			totalBirths += numBorn;</span>
+<span class="nc" id="L34">			totalNames += 1;</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">			if (rec.get(1).equals(&quot;M&quot;)) {</span>
+<span class="nc" id="L36">				totalBoys += numBorn;</span>
+<span class="nc" id="L37">				uniqueBoys++;</span>
+			}
+			else {
+<span class="nc" id="L40">				totalGirls += numBorn;</span>
+<span class="nc" id="L41">				uniqueGirls++;</span>
+			}
+<span class="nc" id="L43">		}</span>
+		
+<span class="nc" id="L45">		oReport += String.format(&quot;Total Births = %,d\n&quot;, totalBirths);</span>
+<span class="nc" id="L46">		oReport += String.format(&quot;***Baby Girls = %,d\n&quot;, totalGirls);</span>
+<span class="nc" id="L47">		oReport += String.format(&quot;***Baby Boys = %,d\n&quot;, totalBoys);</span>
+		
+<span class="nc" id="L49">		oReport += String.format(&quot;Total Number of Unique Names = %,d\n&quot;, totalNames);</span>
+<span class="nc" id="L50">		oReport += String.format(&quot;***Unique Names (baby girls) = %,d\n&quot;, uniqueGirls);</span>
+<span class="nc" id="L51">		oReport += String.format(&quot;***Unique Names (baby boys) = %,d\n&quot;, uniqueBoys);</span>
+		
+<span class="nc" id="L53">		return oReport;</span>
+	}
+	
+	
+	 /**
+	  *
+	  * @param year The year we want to find the rank of the name from
+	  * @param name The name we want to find the rank of
+	  * @param gender The gender of the name we want to find the rank of
+	  * @return rank If the name is found in the given year
+	  */
+	 public static int getRank(int year, String name, String gender) {
+<span class="fc" id="L65">	     boolean found = false;</span>
+<span class="fc" id="L66">	     int oRank = 0;</span>
+<span class="fc" id="L67">	 	int rank = 1;</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">	     for (CSVRecord rec : getFileParser(year)) {</span>
+	         // Increment rank if gender matches param
+<span class="fc bfc" id="L70" title="All 2 branches covered.">	         if (rec.get(1).equals(gender)) {</span>
+	             // Return rank if name matches param
+<span class="fc bfc" id="L72" title="All 2 branches covered.">	             if (rec.get(0).equals(name)) {</span>
+<span class="fc" id="L73">	             	found = true;</span>
+<span class="fc" id="L74">	             	oRank = rank;</span>
+<span class="fc" id="L75">	             	break;</span>
+	             }
+<span class="fc" id="L77">	             rank++;</span>
+	         }
+<span class="fc" id="L79">	     }</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">	     if (found)</span>
+<span class="fc" id="L81">	     	return oRank;</span>
+	     else
+<span class="fc" id="L83">	     	return -1;</span>
+	 }
+	 
+ 
+	 /**
+	  * 
+	  * @param year The year we want to find the name based on the given rank from. 
+	  * @param rank The rank we use to find the name in the given year.
+	  * @param gender The gender of the name we want to find based on the given rank.
+	  * @return Name If the rank with gender is valid in the year.
+	  */
+	 public static String getName(int year, int rank, String gender) {
+<span class="fc" id="L95">	 	boolean found = false;</span>
+<span class="fc" id="L96">	     String oName = &quot;&quot;;</span>
+<span class="fc" id="L97">	     int currentRank = 0;</span>
+	     
+	     // For every name entry in the CSV file
+<span class="fc bfc" id="L100" title="All 2 branches covered.">	     for (CSVRecord rec : getFileParser(year)) {</span>
+	         // Get its rank if gender matches param
+<span class="fc bfc" id="L102" title="All 2 branches covered.">	         if (rec.get(1).equals(gender)) {</span>
+	             // Get the name whose rank matches param
+<span class="fc" id="L104">	         	currentRank++;</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">	            if (currentRank == rank) {</span>
+<span class="fc" id="L106">	             	found = true;</span>
+<span class="fc" id="L107">	             	oName = rec.get(0);</span>
+<span class="fc" id="L108">	                break;</span>
+	            }
+	         }
+<span class="fc" id="L111">	     }     </span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">	     if (found)</span>
+<span class="fc" id="L113">	     	return oName;</span>
+	     else
+<span class="fc" id="L115">	     	return &quot;information on the name at the specified rank is not available&quot;;</span>
+	 }
+	 
+
+	 /**
+     * Task 3A: Identify the names that have maintained a high level of popularity within Top N over a given period.
+     *
+     * @param istartYear the start year of the period
+     * @param iendYear the end year of the period
+     * @param igender the gender of interest
+     * @param topN the level of popularity
+     * @return A LinkedHashMap that stores name as the key and RankProperties as value
+     */
+	 public static LinkedHashMap&lt;String, RankProperties&gt; getTrend(int istartYear, int iendYear, String igender, int topN) {
+<span class="fc" id="L129">		 var result = new LinkedHashMap&lt;String, RankProperties&gt;();</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">	 	 for (int i = istartYear, j = 1; j &lt;= topN; j++) {</span>
+<span class="fc" id="L131"> 			var currentName = getName(i, j, igender);</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">	 		if (currentName.equals(&quot;information on the name at the specified rank is not available&quot;))</span>
+<span class="fc" id="L133">	 			throw new IllegalArgumentException(&quot;The TopN parameter is too large.&quot;);</span>
+<span class="fc" id="L134"> 			result.put(currentName, new RankProperties(j, i, j, i, &quot;FLAT&quot;));</span>
+ 		 }
+
+<span class="fc bfc" id="L137" title="All 2 branches covered.">	 	 for (int i = istartYear + 1; i &lt;= iendYear; i++) {</span>
+<span class="fc" id="L138">	 		 var deletingName = new ArrayList&lt;String&gt;();</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">	 		 for (String key : result.keySet()) {</span>
+	 			 int currentRank;
+<span class="fc bfc" id="L141" title="All 2 branches covered.">	 			 if (topN &gt;= (currentRank = getRank(i, key, igender))) {		// maintained, then update</span>
+<span class="fc bfc" id="L142" title="All 4 branches covered.">	 				 if (currentRank == result.get(key).highestRank &amp;&amp; currentRank == result.get(key).lowestRank) {</span>
+<span class="fc" id="L143">	 					result.get(key).highestRank = currentRank;</span>
+<span class="fc" id="L144">	 					result.get(key).highestRankYear = i;</span>
+<span class="fc" id="L145">	 					result.get(key).lowestRank = currentRank;</span>
+<span class="fc" id="L146">	 					result.get(key).lowestRankYear = i;</span>
+	 				 }
+<span class="fc bfc" id="L148" title="All 2 branches covered.">	 				 if (result.get(key).highestRank &lt; currentRank) {		</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">	 					if (result.get(key).lowestRank &lt;= currentRank){</span>
+<span class="fc" id="L150">	 						result.get(key).lowestRank = currentRank;</span>
+<span class="fc" id="L151">	 						result.get(key).lowestRankYear = i;</span>
+	 					}
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">	 				 } else if (result.get(key).highestRank &gt;= currentRank) {</span>
+<span class="fc" id="L154">	 					result.get(key).highestRank = currentRank;</span>
+<span class="fc" id="L155">						result.get(key).highestRankYear = i;</span>
+	 				 }
+<span class="fc bfc" id="L157" title="All 2 branches covered.">	 				 if (result.get(key).lowestRankYear &lt; result.get(key).highestRankYear) </span>
+<span class="fc" id="L158">	 					result.get(key).grossTrend = &quot;UP&quot;;</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">	 				 else if (result.get(key).lowestRankYear &gt; result.get(key).highestRankYear) </span>
+<span class="fc" id="L160">	 					result.get(key).grossTrend = &quot;DOWN&quot;;</span>
+	 			 } else {									// remove from map
+<span class="fc" id="L162">	 				deletingName.add(key);</span>
+	 			 }
+<span class="fc" id="L164">	 		 }</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">	 		 for (var key : deletingName)</span>
+<span class="fc" id="L166">	 			 result.remove(key);</span>
+	 	 }
+<span class="fc" id="L168">	 	 return result;</span>
+	 }
+	 
+	 /**
+     * Task 6: Calculate Scores for Compatible Pairs
+     * &lt;p&gt;The algorithm is described as follows.
+     * &lt;p&gt;Compute oRank which equals to the iGender ranking of iName in iYOB (equals to 1, if iName is not ranked in iYOB).
+	   * &lt;p&gt;Compute oYOB which equals to (iYOB+1) if (iPreference is Younger), or (iYOB-1) if (iPreference is Older).
+	   * &lt;p&gt;Compute oRankMate which equals to the iGenderMate ranking of iNameMate in oYOB (equals to 1, if iNameMate is not ranked in oYOB).
+	   * &lt;p&gt;If oRank is larger than oRankMate then,
+	   * &lt;p&gt;Compute oScore which equals to (1 - abs(oRank -oRankMate) / oRank) * 100%.
+	   * &lt;p&gt;If oRankMate is larger than oRank then,
+	   * &lt;p&gt;Compute oScore which equals to (1 - abs(oRank - oRankMate) / oRankMate) * 100%.
+	   * &lt;p&gt;In this way, the algorithm will provide a score of compatibility in range of 0%-100% (0%: Not Compatible; 100%: Perfect Match).
+     *
+     * @param iName Name of the user
+     * @param iGender Gender of the user
+     * @param iYOB Year of Birth of the user
+     * @param iNameMate Name of the person to be matched
+     * @param iGenderMate Gender of the person to be matched
+     * @param iPreference user's preference on either have a younger or older soulmate
+     * @return A float number that storing the calculated compatibility score
+     */
+	 public static float calculateCompatiblityScore(String iName, String iGender, int iYOB, String iNameMate, String iGenderMate, String iPreference) {
+<span class="fc" id="L192">		 int oRank = getRank(iYOB, iName, iGender);</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">		 oRank = oRank == -1 ? 1 : oRank;</span>
+		 
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">		 int oYOB = iPreference.equals(&quot;Younger&quot;) ? iYOB + 1 : iYOB - 1;</span>
+
+<span class="fc" id="L197">		 int oRankMate = getRank(oYOB, iNameMate, iGenderMate);</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">		 oRankMate = oRankMate == -1 ? 1 : oRankMate;</span>
+
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">		 if (oRank &gt; oRankMate)</span>
+<span class="nc" id="L201">			 return ((1 - Math.abs(oRank - oRankMate) / (float)oRank) * 100);</span>
+<span class="fc" id="L202">		 return ((1 - Math.abs(oRank - oRankMate) / (float)oRankMate) * 100);</span>
+	 }
+
+	 // task 1
+	 /**
+	  * 
+	  * @param hashmap HashMap where each entry contains Name and its frequency 
+	  * @return name The name with the maximum frequency in the HashMap
+	  */
+	 public static String getMaxFromHashMap(HashMap&lt;String, Integer&gt; hashmap) { 
+<span class="fc" id="L212">		 String result = &quot;&quot;;</span>
+<span class="fc" id="L213">		 Integer currentMaxFreq = -1;</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">		 for (Map.Entry&lt;String, Integer&gt; entry : hashmap.entrySet()) {</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">			 if (entry.getValue() &gt; currentMaxFreq) {</span>
+<span class="fc" id="L216">				 currentMaxFreq = entry.getValue();</span>
+<span class="fc" id="L217">				 result = entry.getKey();</span>
+			 }
+<span class="fc" id="L219">		 }</span>
+<span class="fc" id="L220">		 return result;</span>
+	 }
+	 
+	 /**
+	  * 
+	  * @param topN Number of result. 
+	  * @param fromYear The starting year we are interested in. 
+	  * @param toYear The ending year we are interested in to find the top names. 
+	  * @param gender The gender of the names we are interested in. 
+	  * @return HashMap with entries containing top names and their frequencies
+	  */
+	 public static HashMap&lt;String, Integer&gt; getTopNNameWithInYears(int topN, int fromYear, int toYear, String gender) {
+<span class="fc" id="L232">		 HashMap&lt;String, Integer&gt; result = new HashMap&lt;String, Integer&gt;();</span>
+<span class="fc" id="L233">		 HashMap&lt;String, Integer&gt; name_freq = new HashMap&lt;String, Integer&gt;();</span>
+<span class="fc bfc" id="L234" title="All 2 branches covered.">		 for (int year = fromYear; year &lt;= toYear; ++year) { // put all valid entries in map</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">			 for (CSVRecord rec : getFileParser(year)) {</span>
+<span class="fc bfc" id="L236" title="All 2 branches covered.">		         if (rec.get(1).equals(gender)) {</span>
+<span class="fc" id="L237">		        	 name_freq.put(rec.get(0), Integer.parseInt(rec.get(2)));</span>
+		         }
+<span class="fc" id="L239">		     }</span>
+		 }
+<span class="fc" id="L241">		 String currentName = &quot;&quot;;</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">		 for (int i = 0; i &lt; topN; ++i) { // get max name, add to result, remove it, do 5 times</span>
+<span class="fc" id="L243">			 currentName = getMaxFromHashMap(name_freq);</span>
+<span class="fc" id="L244">			 result.put(currentName, name_freq.get(currentName));</span>
+<span class="fc" id="L245">			 name_freq.remove(currentName);</span>
+		 }
+		 
+<span class="fc" id="L248">		 return result;</span>
+	 }
+	 
+  	 /*
+	  * Task 2
+	  */
+	 /**
+	  * This is a helper function to get the counting number of a name in a specific year.
+	  * @param year The year that the number of name used 
+	  * @param name	The name you want to search
+	  * @param gender The gender of the name
+	  * @return the number of frequency of a name using
+	  */
+	 public static int getcount(int year, String name, String gender) {
+<span class="fc" id="L262">		 boolean found = false;</span>
+<span class="fc" id="L263">		 int count = 0;</span>
+<span class="fc" id="L264">		 int rank = 1;</span>
+<span class="fc bfc" id="L265" title="All 2 branches covered.">	     for (CSVRecord rec : getFileParser(year)) {</span>
+	         // Increment rank if gender matches param
+<span class="fc bfc" id="L267" title="All 2 branches covered.">	         if (rec.get(1).equals(gender)) {</span>
+	             // Return count if name matches param
+<span class="fc bfc" id="L269" title="All 2 branches covered.">	             if (rec.get(0).equals(name)) {</span>
+<span class="fc" id="L270">	             	found = true;</span>
+<span class="fc" id="L271">	             	count = Integer.parseInt(rec.get(2));</span>
+<span class="fc" id="L272">	             	break;</span>
+	             }
+<span class="fc" id="L274">	             rank++;</span>
+	         }
+<span class="fc" id="L276">	     }</span>
+<span class="fc bfc" id="L277" title="All 2 branches covered.">	     if (found)</span>
+<span class="fc" id="L278">	     	return count;</span>
+	     else
+<span class="fc" id="L280">	     	return -1;</span>
+	 }
+	 
+	 /**
+	  * 
+	  * @param year The year that the total number of baby year you want to know
+	  * @return The total number of baby in that year
+	  */
+	 public static int getbabynumber(int year) {
+<span class="fc" id="L289">		 int totalBirths = 0;</span>
+<span class="fc bfc" id="L290" title="All 2 branches covered.">	     for (CSVRecord rec : getFileParser(year)) {</span>
+<span class="fc" id="L291">	    	 int numBorn = Integer.parseInt(rec.get(2));</span>
+<span class="fc" id="L292">				totalBirths += numBorn;</span>
+<span class="fc" id="L293">	     }</span>
+<span class="fc" id="L294">	     	return totalBirths;</span>
+	 }
+	 
+	 /*
+	  * Task5
+	  */
+	 /**
+	  * 
+	  * @param Name  The user name
+	  * @param Gender The gender of the user
+	  * @param YOB	The year of birth of the user
+	  * @param Gender_soulmate The gender of the soulmate you want to find	
+	  * @param Preference	The preference that you want a older soulmate or younger soulmate
+	  * @return The recommended name of the soulmate
+	  */
+	 public static String NK_T5algorithm(String Name,String Gender,int YOB,String Gender_soulmate,String Preference) {
+<span class="pc bpc" id="L310" title="1 of 2 branches missed.">		 int oRank = (getRank(YOB,Name,Gender)==-1)? 1:getRank(YOB,Name,Gender);</span>
+<span class="pc bpc" id="L311" title="1 of 2 branches missed.">		 int oYOB = (Preference == &quot;O&quot;)? YOB-1:YOB+1;</span>
+<span class="fc" id="L312">		 String oName = getName(oYOB, oRank, Gender_soulmate);</span>
+<span class="fc" id="L313">		 return oName;</span>
+	 }
+
+ 
+}
+
+/**
+ * A helper class to store the rank properties for implementing task3A (getTrend) functionality
+ */
+class RankProperties {
+	public String name;
+	public int lowestRank;
+	public int lowestRankYear;
+	public int highestRank;
+	public int highestRankYear;
+	public String grossTrend;
+	
+<span class="fc" id="L330">	RankProperties(int lowestRank, int lowestRankYear, int highestRank, int highestRankYear, String grossTrend){</span>
+<span class="fc" id="L331">		this.lowestRank = lowestRank;</span>
+<span class="fc" id="L332">		this.lowestRankYear = lowestRankYear;</span>
+<span class="fc" id="L333">		this.highestRank = highestRank;</span>
+<span class="fc" id="L334">		this.highestRankYear = highestRankYear;</span>
+<span class="fc" id="L335">		this.grossTrend = grossTrend;</span>
+<span class="fc" id="L336">	}</span>
+	
+	@Override
+	public boolean equals(Object o) {
+<span class="fc" id="L340">		RankProperties another = (RankProperties) o;</span>
+<span class="pc bpc" id="L341" title="4 of 8 branches missed.">		return lowestRank == another.lowestRank &amp;&amp; lowestRankYear == another.lowestRankYear</span>
+				&amp;&amp; highestRank == another.highestRank &amp;&amp; highestRankYear == another.highestRankYear
+<span class="pc bpc" id="L343" title="1 of 2 branches missed.">				&amp;&amp; grossTrend.equals(another.grossTrend);</span>
+	}
+  
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
